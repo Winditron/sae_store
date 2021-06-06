@@ -8,12 +8,12 @@ Plantbase.at
   + id* INT A_I PK
   + email* VARCHAR(255) UK
   + password* (Hash) VARCHAR(255)
-  + firstname* VARCHAR(255)
-  + secondname* VARCHAR(255)
-  + phone* VARCHAR(255)
-  + address*  VARCHAR(255)
-  + country* VARCHAR(255)
-  + zip* VARCHAR(255)
+  + firstname VARCHAR(255) NULL
+  + secondname VARCHAR(255) NULL
+  + phone VARCHAR(255) NULL
+  + address  VARCHAR(255) NULL
+  + country VARCHAR(255) NULL
+  + zip VARCHAR(255) NULL
   + is_admin BOOL NULL default:0
   + crdate* (Creation Date) TIMESTAMP
   + tstamp* (Zeitpunkt des letzten Updates) TIMESTAMP ou_CT
@@ -24,11 +24,11 @@ Plantbase.at
   + name* VARCHAR(255)
   + slug* VARCHER(255) UK
   + description TEXT Null
-  + price* INT 
+  + price* DECIMAL(10,2)
   + category* INT FK:categories.id
-  + watering*
-  + sun_location*
-  + size* (größe der Pflanze in cm)
+  + watering* ENUM('gering', 'mittel', 'oft')
+  + sun_location* ENUM('Sonne','Halber Schatten',' Voller Schatten')
+  + size* (größe der Pflanze in cm) INT
   + stock INT NULL
   + crdate* TIMESTAMP
   + tstamp* (Zeitpunkt des letzten Updates) TIMESTAMP ou_CT
@@ -59,7 +59,7 @@ Plantbase.at
 
 + Order - orders
   + id* INT A_I PK
-  + user_id* INT FK:users.id
+  + user_id INT FK:users.id
   + firstname* VARCHAR(255)
   + secondname* VARCHAR(255)
   + email* VARCHAR(255)
@@ -71,7 +71,7 @@ Plantbase.at
   + alt_country VARCHAR(255)
   + alt_zip VARCHAR(255)
   + products* (JSON mit allen bestellten Produkten) TEXT
-  + status NULL 
+  + status ENUM('offen','bezahlt','in Bearbeitung','versandbereit','abgeschlossen','storniert') NULL
   + crdate* (Creation Date) TIMESTAMP
   + tstamp* (Zeitpunkt des letzten Updates) TIMESTAMP ou_CT
   + deleted_at TIMESTAMP NULL
