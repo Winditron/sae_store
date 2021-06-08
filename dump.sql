@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Erstellungszeit: 06. Jun 2021 um 23:15
+-- Erstellungszeit: 09. Jun 2021 um 00:09
 -- Server-Version: 10.4.18-MariaDB
 -- PHP-Version: 8.0.3
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Datenbank: `plantbase`
+-- Datenbank: `greenroom`
 --
 
 -- --------------------------------------------------------
@@ -87,6 +87,14 @@ CREATE TABLE `pictures` (
   `deleted_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Daten für Tabelle `pictures`
+--
+
+INSERT INTO `pictures` (`id`, `name`, `path`, `alttext`, `crdate`, `tstamp`, `deleted_at`) VALUES
+(1, 'Juthatip-Soper-12cm-etiket.jpg', 'pictures/products', NULL, '2021-06-08 18:54:26', '2021-06-08 18:54:26', NULL),
+(2, 'Juthatip_soper_Sarracenia_square_1500_1200x1200.jpg', 'pictures/products', NULL, '2021-06-08 20:58:05', '2021-06-08 20:58:05', '2021-06-08 20:59:21');
+
 -- --------------------------------------------------------
 
 --
@@ -114,7 +122,7 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `slug`, `description`, `price`, `category`, `watering`, `sun_location`, `size`, `stock`, `crdate`, `tstamp`, `deleted_at`) VALUES
-(11, 'Jutathip Soper', 'Jutathip-soper', 'Eine fleischfressende Pflanze der Extraklasse für Haus oder Büro! Die winterharte Schlauchpflanze Jutathip Soper (Sarracenia), auch Trompetenpflanzen oder Trompetenblatt, stammt aus der Gattung fleischfressender Pflanzen. Bei dieser sehr seltenen Art werden die Blätter zu bizarren und leuchtend rosa Schläuchen umgewandelt. Am oberen Schlauchrand befindet sich eine glatte Oberfläche mit kleinen Rippen, die senkrecht nach unten verlaufen. Wenn die Insekten auf diese Fläche geraten, können sie nicht mehr entwischen und fallen in den Schlauch. Die Insekten werden durch die stacheligen Fühlborsten immer weiter in das Falleninnere gedrängt und letztendlich dort durch die Verdauungssäfte verdaut. So zieht sich die Schlauchpflanze Jutathip Soper alle wichtigsten Nährstoffe aus dem Insekt.\r\n\r\nStellen Sie die winterharte Schlauchpflanzen Jutathip Soper an einen warmen und hellen Platz, aber schützen Sie die Blätter vor direkten Sonnenstrahlen. Da diese Karnivoren ziemlich viel Kälte vertragen, können sie auch draußen im Freien stehen. Die Erde darf konstant recht feucht sein, denn Sarracenia wächst ursprünglich in sumpfigen Gebieten. Tipp: Stellen Sie den Topf auf einen Untersetzer, in dem ständig etwas Wasser steht. (Sarracenia Jutathip Soper)\r\n\r\nDie Lieferung erfolgt ohne Übertopf.', '12.00', 1, 'oft', 'Halber Schatten', 70, 50, '2021-06-06 21:10:56', '2021-06-06 21:11:25', NULL),
+(11, 'Jutathip Soper', 'Jutathip-soper', 'Eine fleischfressende Pflanze der Extraklasse für Haus oder Büro! Die winterharte Schlauchpflanze Jutathip Soper (Sarracenia), auch Trompetenpflanzen oder Trompetenblatt, stammt aus der Gattung fleischfressender Pflanzen. Bei dieser sehr seltenen Art werden die Blätter zu bizarren und leuchtend rosa Schläuchen umgewandelt. Am oberen Schlauchrand befindet sich eine glatte Oberfläche mit kleinen Rippen, die senkrecht nach unten verlaufen. Wenn die Insekten auf diese Fläche geraten, können sie nicht mehr entwischen und fallen in den Schlauch. Die Insekten werden durch die stacheligen Fühlborsten immer weiter in das Falleninnere gedrängt und letztendlich dort durch die Verdauungssäfte verdaut. So zieht sich die Schlauchpflanze Jutathip Soper alle wichtigsten Nährstoffe aus dem Insekt.\r\n\r\nStellen Sie die winterharte Schlauchpflanzen Jutathip Soper an einen warmen und hellen Platz, aber schützen Sie die Blätter vor direkten Sonnenstrahlen. Da diese Karnivoren ziemlich viel Kälte vertragen, können sie auch draußen im Freien stehen. Die Erde darf konstant recht feucht sein, denn Sarracenia wächst ursprünglich in sumpfigen Gebieten. Tipp: Stellen Sie den Topf auf einen Untersetzer, in dem ständig etwas Wasser steht. (Sarracenia Jutathip Soper)\r\n\r\nDie Lieferung erfolgt ohne Übertopf.', '12.49', 1, 'oft', 'Halber Schatten', 70, 50, '2021-06-06 21:10:56', '2021-06-07 21:54:39', NULL),
 (12, 'Aloe Vera', 'aloe-vera', 'Die Aloe Vera ist eine dekorative, immergrüne Zierpflanze, die wegen ihres wertvollen Gels schon seit Jahrtausenden geschätzt wird. Auch heute ist sie noch wegen den natürlichen, gelartigen Substanzen, welche die dickfleischigen Blätter in sich tragen, voll im Trend. Das Aloe Vera-Gel besitzt wertvolle Inhaltsstoffe und wird u.a. zur Haut- und Haarpflege genutzt. Die sukkulente Pflanze, die ein wenig an Kakteen erinnert, wird weltweit in tropischen und subtropischen Regionen kultiviert. Als Zimmerpflanze ist die Aloe Vera (Aloe barbadensis Miller), die auch als Wüstenlilie bekannt ist, in unseren Breiten in der Wohnung und im Büro sehr leicht zu kultivieren.\r\n\r\nDie Aloe Vera bevorzugt einen gleichmäßig warmen Standort mit viel Licht & wenig Feuchtigkeit. Im Sommer steht sie gerne im Freien, wo sich Ihre Blätter unter der Sonneneinstrahlung rötlich-grau färben können. Im Winter müssen Sie die Pflanze ins Haus holen, denn Kälte und Frost toleriert sie nicht. Die Aloe-Vera-Pflanze bzw. Wüstenlilie ist durch ihren wertvollen Saft bekannt, wird aber auch als dekorative, exotische & pflegeleichte Pflanze im Topf & Kübel sehr geschätzt. (Aloe barbadensis Miller)\r\n\r\nDie Lieferung erfolgt ohne Übertopf.', '10.00', 2, 'gering', 'Sonne', 50, 20, '2021-06-06 21:14:30', '2021-06-06 21:14:30', NULL);
 
 -- --------------------------------------------------------
@@ -125,9 +133,17 @@ INSERT INTO `products` (`id`, `name`, `slug`, `description`, `price`, `category`
 
 CREATE TABLE `products_pictures_map` (
   `id` int(11) NOT NULL,
-  `products_id` int(11) NOT NULL,
-  `pictures_id` int(11) NOT NULL
+  `product_id` int(11) NOT NULL,
+  `picture_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Daten für Tabelle `products_pictures_map`
+--
+
+INSERT INTO `products_pictures_map` (`id`, `product_id`, `picture_id`) VALUES
+(1, 11, 1),
+(2, 11, 2);
 
 -- --------------------------------------------------------
 
@@ -209,7 +225,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT für Tabelle `pictures`
 --
 ALTER TABLE `pictures`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT für Tabelle `products`
@@ -221,7 +237,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT für Tabelle `products_pictures_map`
 --
 ALTER TABLE `products_pictures_map`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT für Tabelle `users`
