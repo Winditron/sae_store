@@ -16,13 +16,3 @@ RewriteCond %{REQUEST_FILENAME} !-d
 # Gesamten Pfad, beginnend am Verzeichnis, in dem diese .htacces Datei gespeichert ist, als Parameter an die index.php
 #   Datei anähngen.
 RewriteRule ^(.*)$ index.php?path=$1 [L,QSA]
-
-# Unser Webroot ist eigentlich in /public. Kann der Webserver aber nicht entsprechend konfiguriert werden, kann der
-#   Webroot auch auf das Wurzelverzeichnis zeigen. In diesem Fall sollten aber nur Dateien aus dem /public Ordner
-#   aufrufbar sein. Hier konfigurieren wir, dass Urls, die mit app, config, core usw. beginnen, Forbidden sein sollen
-#   und somit nicht direkt über die Url angesteuert werden können. Sie können weiterhin von PHP eingebunden werden.
-RewriteRule ^(app|config|core|resources|routes|storage) - [F]
-
-# Hier setzen wir Konfigurations-Werte für PHP. In diesem Fall setzen wir das Upload Limit von den Standard 2MB auf 10MB.
-php_value upload_max_filesize 10M
-php_value post_max_size 10M
