@@ -115,3 +115,6 @@ C Create R Read/List U Update D Delete
 + Admin: User Liste
 + Admin: User Edit
 + Admin: User Create
+
+## Third Party 
++ Remix Icons -> Open Source ICON Library

@@ -56,6 +56,7 @@ class Database
      */
     public function query (string $query, array $params = []): mixed
     {
+
         /**
          * Wenn keine Parameter in $params übergeben wurden an diese Funktion, dann schicken wir den Query einfach so ab,
          * weil wir ihn nicht preparen müssen.

@@ -14,7 +14,7 @@ abstract class AbstractModel
 {
 
     /**
-     * Der Konstruktor befüllt das Objekt, sofern Daten übergeben worden sind.
+     * Der Konstruktor befüllt das Objekt, sofern Daten  übergeben worden sind.
      *
      * @param array $data
      */
@@ -24,7 +24,6 @@ abstract class AbstractModel
          * Die Methode wird in AbstractModel nur abstrakt definiert und kann in jedem Model, dass die Klasse erweitert,
          * überschrieben werden.
          */
-
         /**
          * Wenn Daten übergeben wurden, so füllen wir das aktuelle Objekt damit.
          */
