@@ -2,6 +2,8 @@
 
 <body>
 
+    <?php require_once __DIR__ . '/../partials/navbar.php'?>
+
 <main>
     <!--
     In der View-Klasse definieren wir, welches Template geladen werden soll. Der eigentliche Vorgang des Ladens passiert

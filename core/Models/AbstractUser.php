@@ -28,12 +28,12 @@ abstract class AbstractUser extends AbstractModel
      *
      * @return object|null
      */
-    public static function findByEmailOrUsername (string $emailOrUsername): ?object
+    public static function findByEmail(string $email): ?object
     {
         /**
          * Whitespace entfernen.
          */
-        $emailOrUsername = trim($emailOrUsername);
+        $email = trim($email);
 
         /**
          * Datenbankverbindung herstellen.
@@ -53,9 +53,8 @@ abstract class AbstractUser extends AbstractModel
          * nur dann die Möglichkeit, dass wir mehr als ein Ergebnis erhalten, wenn jemand eine Fremde E-Mail Adresse als
          * Username verwendet hat.
          */
-        $results = $database->query("SELECT * FROM $tablename WHERE email = ? OR username = ? LIMIT 1", [
-            's:email' => $emailOrUsername,
-            's:username' => $emailOrUsername
+        $results = $database->query("SELECT * FROM $tablename WHERE email = ? LIMIT 1", [
+            's:email' => $email,
         ]);
 
         /**
@@ -81,7 +80,7 @@ abstract class AbstractUser extends AbstractModel
      *
      * @return bool
      */
-    public function checkPassword (string $password): bool
+    public function checkPassword(string $password): bool
     {
         /**
          * Die folgende Funktion kann einen plaintext Passwort gegen einen bcrypt Hash prüfen und wird von PHP
@@ -99,7 +98,7 @@ abstract class AbstractUser extends AbstractModel
      *
      * @return void
      */
-    public function setPassword (string $password): void
+    public function setPassword(string $password): void
     {
         $this->password = password_hash($password, PASSWORD_DEFAULT);
     }
@@ -112,7 +111,7 @@ abstract class AbstractUser extends AbstractModel
      *
      * @return bool
      */
-    public function login (string $redirect = '', bool $remember = false): bool
+    public function login(string $redirect = '', bool $remember = false): bool
     {
         /**
          * Login-Status in die Session speichern.
@@ -151,7 +150,7 @@ abstract class AbstractUser extends AbstractModel
      *
      * @return bool
      */
-    public static function logout (string $redirect = ''): bool
+    public static function logout(string $redirect = ''): bool
     {
         /**
          * Login Status in der Session aktualisieren.
@@ -172,7 +171,6 @@ abstract class AbstractUser extends AbstractModel
         return true;
     }
 
-
     /**
      * Prüfen, ob aktuell ein*e User*in eingeloggt ist.
      *
@@ -182,7 +180,7 @@ abstract class AbstractUser extends AbstractModel
      *
      * @return bool
      */
-    public static function isLoggedIn (): bool
+    public static function isLoggedIn(): bool
     {
         /**
          * Ist ein*e User*in eingeloggt, so geben wir true zurück ...
@@ -205,7 +203,7 @@ abstract class AbstractUser extends AbstractModel
      *
      * @return ?User
      */
-    public static function getLoggedIn (): ?User
+    public static function getLoggedIn(): ?User
     {
         /**
          * Ist ein*e User*in eingeloggt, ...

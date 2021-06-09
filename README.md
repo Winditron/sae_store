@@ -117,4 +117,4 @@ C Create R Read/List U Update D Delete
 + Admin: User Create
 
 ## Third Party 
-+ Remix Icons -> Open Source ICON Library
++ [Remix Icons](https://github.com/Remix-Design/remixicon) -> _Open Source ICON Library_
