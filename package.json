@@ -1,0 +1,23 @@
+{
+  "name": "sae_store",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "sass": "sass resources/scss/styles.scss public/css/styles.css",
+    "sass:watch": "sass --watch resources/scss/styles.scss public/css/styles.css",
+    "js:copy": "cp resources/js/*.js public/js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Winditron/sae_store.git"
+  },
+  "author": "Lorenz Windisch",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Winditron/sae_store/issues"
+  },
+  "homepage": "https://github.com/Winditron/sae_store#readme",
+  "dependencies": {
+    "sass": "^1.34.1"
+  }
+}

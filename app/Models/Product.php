@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Core\Models\AbstractModel;
 use Core\Traits\HasSlug;
+use Core\Database;
+
 
 class Product extends AbstractModel
 {
@@ -42,7 +44,41 @@ class Product extends AbstractModel
 
     public function save ():bool
     {
-        return true;
+        $database = new Database();
+
+        $tablename = self::getTablenameFromClassname();
+
+        if(empty($this->id)){
+
+            $result = $database->query("INSERT INTO $tablename SET name = ?, slug = ?, description = ?, price = ?, category = ?, watering = ?, sun_location = ?, size = ?, stock = ?",[
+                's:name' => $this->name,
+                's:slug' => $this->slug,
+                's:description' => $this->description,
+                'i:price' => $this->price,
+                'i:category' => $this->category,
+                's:watering' => $this->watering,
+                's:sun_location' => $this->sun_location,
+                'i:size' => $this->size,
+                'i:stock' => $this->stock,
+            ]);
+
+        } else {
+            return $database->query("UPDATE  $tablename SET name = ?, slug = ?, description = ?, price = ?, category = ?, watering = ?, sun_location = ?, size = ?, stock = ? WHERE id = {$this->id}",[
+                's:name' => $this->name,
+                's:slug' => $this->slug,
+                's:description' => $this->description,
+                'i:price' => $this->price,
+                'i:category' => $this->category,
+                's:watering' => $this->watering,
+                's:sun_location' => $this->sun_location,
+                'i:size' => $this->size,
+                'i:stock' => $this->stock,
+            ]);
+        }
+
+        $this->handleInsertResult($database);
+
+        return $result;
     }
 
     public function files()
@@ -53,6 +89,21 @@ class Product extends AbstractModel
     public function formatPrice ():string
     {
         return number_format($this->price , 2, ",", " " );
+    }
+
+    public function wateringValues():array
+    {
+        return self::getEnumValues('watering');
+    }
+
+    public function sunlocationValues():array
+    {
+        return self::getEnumValues('sun_location');
+    }
+
+    public function category()
+    {
+        return Category::findByProduct($this->id);
     }
 }
 

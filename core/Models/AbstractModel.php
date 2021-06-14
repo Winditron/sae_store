@@ -2,6 +2,7 @@
 
 namespace Core\Models;
 
+use Core\Config;
 use Core\Database;
 use Core\View;
 
@@ -404,5 +405,35 @@ abstract class AbstractModel
          */
         return $tablename;
     }
+
+        /**
+     * Mit dieser Funktion werden alle möglichen Werte einer spalte die den Datentyp ENUM hat ermittelt     * 
+     * @return array
+     */
+    public static function getEnumValues(string $column): array 
+    {
+        $values = [];
+
+        $tablename = self::getTablenameFromClassname();
+
+        $database_name = Config::get('database.dbname');
+
+        $database = new Database();
+        $result = $database->query("  SELECT COLUMN_TYPE AS AllPossibleEnumValues
+                                        FROM INFORMATION_SCHEMA.COLUMNS
+                                        WHERE TABLE_SCHEMA = '{$database_name}'
+                                            AND TABLE_NAME = '{$tablename}' 
+                                            AND COLUMN_NAME = '{$column}'
+        ");
+
+        if(!empty($result)){
+            preg_match( "/^enum\(\'(.*)\'\)$/" , $result[0]['AllPossibleEnumValues'], $matches);
+            $values = explode("','", $matches[1]);
+        }
+
+        return $values;
+
+    }
+
 
 }

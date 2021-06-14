@@ -9,5 +9,6 @@
     <base href="<?php echo \Core\Config::get('app.baseurl'); ?>">
 
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link href="<?php echo BASE_URL; ?>/public/css/styles.css" rel="stylesheet">
 
 </head>
