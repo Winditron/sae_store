@@ -178,6 +178,7 @@ class Router
              * $callable beinhaltete den Namen der Klasse inklusive Namespace als String und kann verwendet werden um
              * ein Objekt ohne fix definierten Klassennamen zu erzeugen, dynamisch also.
              */
+            
             $controller = new $callable[0](); // z.B. // new \App\Controllers\BlogController();
             $action = $callable[1];
 

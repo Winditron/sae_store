@@ -11,5 +11,5 @@ return [
     /**
      * Admin Picture routen
      */
-    '/admin/product/{productid}/picture/{pictureid}/unbind' => [ApiProductController::class => 'unbindPicture'], # Bilder Vererbindung zu einem Product aufheben
+    '/admin/product/{productid}/picture/{pictureid}/unbind' => [ApiProductController::class, 'unbindPicture'], # Bilder Vererbindung zu einem Product aufheben
 ];

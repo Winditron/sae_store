@@ -2,6 +2,8 @@
 
 namespace App\Controllers\Api\Admin;
 
+use App\Models\Product;
+use Core\ApiResponse;
 use Core\Middlewares\AuthMiddleware;
 
 class ApiProductController
@@ -14,9 +16,19 @@ class ApiProductController
         AuthMiddleware::APIloggedInAdminOrFail();
     }
 
-    public function unbindPicture()
+    public function unbindPicture(int $productid, int $pictureid)
     {
-        echo "hallo";
+        $product = Product::find($productid);
+
+        if (empty($product)) {
+            ApiResponse::json("could not find Product", 400);
+            exit;
+        }
+
+        if (!$product->unbindPicture($pictureid)) {
+            ApiResponse::json("could not unbind Picture", 400);
+            exit;
+        }
     }
 
 }

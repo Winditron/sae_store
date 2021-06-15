@@ -11,6 +11,8 @@ class Product extends AbstractModel
 {
     use HasSlug;
 
+    const Tablename_Pictures_map = "products_pictures_map";
+
     public int $id;
     public string $name;
     public string $slug;
@@ -167,5 +169,21 @@ class Product extends AbstractModel
 
         return $errors;
     }
-}
 
+    /**
+     * löscht eine Verbindung von dem Product zu einem Bild
+     */
+    public function unbindPicture(int $picture_id):bool
+    {
+        $database = new Database();
+
+        $tablename = self::Tablename_Pictures_map;
+
+        $results = $database->query("DELETE FROM {$tablename} WHERE product_id = ? AND picture_id = ?", [
+            'i:product_id' => $this->id,
+            'i:picture_id' => $picture_id
+        ]);
+
+        return $results;
+    }
+}
