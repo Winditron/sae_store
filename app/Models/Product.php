@@ -5,7 +5,7 @@ namespace App\Models;
 use Core\Models\AbstractModel;
 use Core\Traits\HasSlug;
 use Core\Database;
-
+use Core\Validator;
 
 class Product extends AbstractModel
 {
@@ -104,6 +104,68 @@ class Product extends AbstractModel
     public function category()
     {
         return Category::findByProduct($this->id);
+    }
+
+    /**
+     * Wenn die übermittelten Daten invaliede sind, dann wird ein Array mit Fehlermeldungen returnt
+     */
+    public function validateFormData():array
+    {
+        $errors = [];
+        $validator = new Validator();
+
+        $validator->text($_POST['name'],'Produktname' , true);
+        $validator->slug($_POST['slug'], 'Slug', true);
+        $validator->float((float)$_POST['price'],'Preis', true);
+        $validator->int((int)$_POST['category'],'Kategorie', true);
+        $validator->int((int)$_POST['size'],'Die maximale Größe', true);
+        $validator->int((int)$_POST['stock'],'Lagerbestand');
+
+    /**
+     * TODO beschreibung validieren
+     */
+        #$validator->textnum($_POST['description'],'Beschreibung');
+
+        /**
+         * Hier wird jeder mögliche Watering wert durchgegangen und nachgeschaut, ob dieser mit dem übergebenen Wert übereinstimmt
+         */
+        $validWateringValues = $this->wateringValues();
+        
+        $valid = false;
+
+        foreach($validWateringValues as $validValues){
+            if($validValues === $_POST['watering']){
+                $valid = true;
+                break;
+            }
+        }
+
+        if (!$valid){
+            $errors[] = "Der Wasserbedarf ist kein gültiger Wert.";
+        }
+
+                /**
+         * Hier wird jeder mögliche Watering wert durchgegangen und nachgeschaut, ob dieser mit dem übergebenen Wert übereinstimmt
+         */
+        $validSunLocation = $this->sunlocationValues();
+        
+        $valid = false;
+
+        foreach($validSunLocation as $validValues){
+            if($validValues === $_POST['sun_location']){
+                $valid = true;
+                break;
+            }
+        }
+
+        if (!$valid){
+            $errors[] = "Der Standort ist kein gültiger Wert.";
+        }
+        
+
+        $errors = $validator->getErrors();
+
+        return $errors;
     }
 }
 

@@ -2,21 +2,21 @@
 
 namespace App\Controllers\Api\Admin;
 
-class ProductController
+use Core\Middlewares\AuthMiddleware;
+
+class ApiProductController
 {
     public function __construct()
     {
         /**
          * Eingeloggter User muss ein Admin sein um functionen aufrufen zu können
          */
-        #AuthMiddleware::APIloggedInAdminOrFail();
+        AuthMiddleware::APIloggedInAdminOrFail();
     }
 
-    public function unbindPicture($product_id)
+    public function unbindPicture()
     {
-        var_dump($product_id);
-        echo "test";
-
+        echo "hallo";
     }
 
 }

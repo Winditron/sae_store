@@ -57,7 +57,7 @@ class Router
              * Doppelte Slashes in allen API Routen entfernen.
              */
             $route = str_replace('//', '/', $route);
-
+            
             /**
              * "fertige" API Route zu den anderen Routes hinzufügen.
              */
@@ -137,6 +137,7 @@ class Router
                      *
                      * preg_match_all() gibt bei einer Übereinstimmung die Anzahl der Treffer zurück.
                      */
+
                     if (preg_match_all($regex, $path, $matches, PREG_SET_ORDER) >= 1) {
 
                         /**

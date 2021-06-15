@@ -1,5 +1,7 @@
 <?php
 
+use App\Controllers\Api\Admin\ApiProductController;
+
 return [
     /**
      * Basket routen
@@ -9,5 +11,5 @@ return [
     /**
      * Admin Picture routen
      */
-    '/admin/product/{product_id}/unbind' => [AdminProductController::class => 'unbindPicture'], # Bilder Vererbindung zu einem Product aufheben
+    '/admin/product/{productid}/picture/{pictureid}/unbind' => [ApiProductController::class => 'unbindPicture'], # Bilder Vererbindung zu einem Product aufheben
 ];

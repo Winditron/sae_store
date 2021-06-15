@@ -4,6 +4,8 @@ namespace App\Controllers\Admin;
 
 use App\Models\Category;
 use App\Models\Product;
+use Core\Helpers\Redirector;
+use Core\Session;
 use Core\View;
 
 class ProductController
@@ -26,6 +28,43 @@ class ProductController
             'product' => $product,
             'categories' => $categories,
         ]);
+    }
+
+    public function update(int $id)
+    {
+
+        $errors = [];
+
+        $product = Product::find($id);
+
+        if (empty($product)) {
+            $errors[] = "Produkt konnte nicht gefunden werden.";
+            Session::set('errors', $errors);
+            Redirector::redirect(BASE_URL . "/admin/product/{$product->id}/edit");
+        }
+
+        $errors = $product->validateFormData();
+
+        if (!empty($errors)) {
+            Session::set('errors', $errors);
+        } else {
+            $product->name = trim($_POST['name']);
+            $product->slug = trim($_POST['slug']);
+            $product->price = trim((float) $_POST['price']);
+            $product->category = trim((int) $_POST['category']);
+            $product->size = trim((int) $_POST['size']);
+            $product->stock = trim((int) $_POST['stock']);
+            $product->description = trim($_POST['description']);
+            $product->watering = trim($_POST['watering']);
+            $product->sun_location = trim($_POST['sun_location']);
+
+            $product->save();
+
+            Session::set('success', ['Erfolgreich gespeichert.']);
+        }
+
+        Redirector::redirect(BASE_URL . "/admin/product/{$product->id}/edit");
+
     }
 
 }
