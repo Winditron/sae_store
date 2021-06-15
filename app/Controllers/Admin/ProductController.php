@@ -67,4 +67,26 @@ class ProductController
 
     }
 
+    public function confirmDelete(int $id)
+    {
+        $product = Product::findOrFail($id);
+
+        View::render('admin/confirmDelete', [
+            'type' => 'Produkt',
+            'title' => $product->name,
+            'confirmUrl' => BASE_URL . "/admin/product/{$product->id}/delete",
+            'abortUrl' => BASE_URL . "/admin/products",
+        ]);
+    }
+
+    public function delete(int $id)
+    {
+        $product = Product::findOrFail($id);
+
+        $product->delete();
+
+        Session::set("success", ["Produkt #{$id} wurde erfolgreich gelöscht"]);
+        Redirector::redirect(BASE_URL . '/admin/products');
+    }
+
 }

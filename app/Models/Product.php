@@ -5,11 +5,12 @@ namespace App\Models;
 use Core\Models\AbstractModel;
 use Core\Traits\HasSlug;
 use Core\Database;
+use Core\Traits\SoftDelete;
 use Core\Validator;
 
 class Product extends AbstractModel
 {
-    use HasSlug;
+    use HasSlug, SoftDelete;
 
     const Tablename_Pictures_map = "products_pictures_map";
 
@@ -180,6 +181,23 @@ class Product extends AbstractModel
         $tablename = self::Tablename_Pictures_map;
 
         $results = $database->query("DELETE FROM {$tablename} WHERE product_id = ? AND picture_id = ?", [
+            'i:product_id' => $this->id,
+            'i:picture_id' => $picture_id
+        ]);
+
+        return $results;
+    }
+
+    /**
+     * Product mit einem Bild verknüpfen
+     */
+    public function bindPicture(int $picture_id):bool
+    {
+        $database = new Database();
+
+        $tablename = self::Tablename_Pictures_map;
+
+        $results = $database->query("INSERT INTO {$tablename} SET product_id = ? , picture_id = ?", [
             'i:product_id' => $this->id,
             'i:picture_id' => $picture_id
         ]);

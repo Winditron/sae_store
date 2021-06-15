@@ -13,7 +13,7 @@
         <div class="item"><?php echo $product->name; ?></div>
         <div class="item">
             <a href="<?php echo BASE_URL . '/admin/product/' . $product->id . '/edit'; ?>" class="btn">Bearbeiten</a>
-            <a href="<?php echo BASE_URL . '/admin/product/' . $product->id . '/delete'; ?>" class="btn danger">Löschen</a>
+            <a href="<?php echo BASE_URL . '/admin/product/' . $product->id . '/delete/confirm'; ?>" class="btn danger">Löschen</a>
         </div>
     <?php endforeach;?>
 </div>

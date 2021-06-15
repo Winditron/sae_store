@@ -29,6 +29,8 @@ return [
      * Admin Product routen
      */
     '/admin/products' => [AdminProductController::class, 'index'], #  Auflistung aller Produkte
+    '/admin/product/{id}/delete/confirm' => [AdminProductController::class, 'confirmDelete'], #  Bestetigung des löschen eines Produkts
+    '/admin/product/{id}/delete' => [AdminProductController::class, 'delete'], #  Löschen eines Produkts (Soft delete)
     '/admin/product/{id}/edit' => [AdminProductController::class, 'edit'], # Bearbeitungsformular für Produkte
     '/admin/product/{id}/edit/update' => [AdminProductController::class, 'update'], # Bearbeitungsformular für Produkte
 
