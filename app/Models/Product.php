@@ -12,7 +12,7 @@ class Product extends AbstractModel
 {
     use HasSlug, SoftDelete;
 
-    const Tablename_Pictures_map = "products_pictures_map";
+    const TABLENAME_PICTURES_MAP = "products_pictures_map";
 
     public int $id;
     public string $name;
@@ -178,7 +178,7 @@ class Product extends AbstractModel
     {
         $database = new Database();
 
-        $tablename = self::Tablename_Pictures_map;
+        $tablename = self::TABLENAME_PICTURES_MAP;
 
         $results = $database->query("DELETE FROM {$tablename} WHERE product_id = ? AND picture_id = ?", [
             'i:product_id' => $this->id,
@@ -189,18 +189,37 @@ class Product extends AbstractModel
     }
 
     /**
-     * Product mit einem Bild verknüpfen
+     * Product mit einem/mehrere Bild/ern verknüpfen
      */
-    public function bindPicture(int $picture_id):bool
+    public function bindPictures(array $picture_ids):bool
     {
+        
         $database = new Database();
+        $tablename = self::TABLENAME_PICTURES_MAP;
 
-        $tablename = self::Tablename_Pictures_map;
 
-        $results = $database->query("INSERT INTO {$tablename} SET product_id = ? , picture_id = ?", [
-            'i:product_id' => $this->id,
-            'i:picture_id' => $picture_id
-        ]);
+        $sql = "INSERT INTO {$tablename} (product_id, picture_id) VALUES ";
+        $sql_values = [];
+        $values = [];
+
+        
+
+        foreach($picture_ids as $id){
+            $picture = Picture::findOrFail($id);
+
+            
+            $sql_values[] = '( ?, ?)';
+        
+            $values['i:' . count($values )] =  $this->id;
+            $values['i:' . count($values )] =  $id;
+            
+        }
+    
+
+        $sql = $sql . join(", ", $sql_values);
+
+
+        $results = $database->query($sql, $values);
 
         return $results;
     }

@@ -33,5 +33,7 @@ return [
     '/admin/product/{id}/delete' => [AdminProductController::class, 'delete'], #  Löschen eines Produkts (Soft delete)
     '/admin/product/{id}/edit' => [AdminProductController::class, 'edit'], # Bearbeitungsformular für Produkte
     '/admin/product/{id}/edit/update' => [AdminProductController::class, 'update'], # Bearbeitungsformular für Produkte
+    '/admin/product/{id}/pictures/selection' => [AdminProductController::class, 'pictureSelection'], # Bearbeitungsformular für Produkte
+    '/admin/product/{id}/pictures/bind' => [AdminProductController::class, 'bindPictures'], # Bearbeitungsformular für Produkte
 
 ];

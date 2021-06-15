@@ -3,6 +3,7 @@
 namespace App\Controllers\Admin;
 
 use App\Models\Category;
+use App\Models\Picture;
 use App\Models\Product;
 use Core\Helpers\Redirector;
 use Core\Session;
@@ -87,6 +88,39 @@ class ProductController
 
         Session::set("success", ["Produkt #{$id} wurde erfolgreich gelöscht"]);
         Redirector::redirect(BASE_URL . '/admin/products');
+    }
+
+    public function pictureSelection(int $id)
+    {
+        $product = Product::findOrFail($id);
+
+        $pictures = Picture::all();
+
+        View::render('picture/selection', [
+            'type' => 'Produkt',
+            'title' => $product->name,
+            'pictures' => $pictures,
+            'confirmUrl' => BASE_URL . "/admin/product/{$product->id}/pictures/bind",
+            'abortUrl' => BASE_URL . "/admin/product/{$product->id}/edit",
+
+        ]);
+
+    }
+
+    public function bindPictures(int $id)
+    {
+        $product = Product::findOrFail($id);
+
+        $picture_ids = [];
+
+        foreach ($_POST["marked-pictures"] as $picture_id => $checked) {
+            $picture_ids[] = $picture_id;
+        }
+
+        $product->bindPictures($picture_ids);
+
+        Session::set("success", ['Bilder wurden erfolgreich verknüpft']);
+        Redirector::redirect(BASE_URL . "/admin/product/{$id}/edit");
     }
 
 }

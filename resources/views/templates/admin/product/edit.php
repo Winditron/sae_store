@@ -19,7 +19,7 @@
                         </div>
                     </div>
                 <?php endforeach;?>
-                    <div class="add"><button type="button" data-href="">&plus;</button></div>
+                    <div class="add"><a href="<?php echo BASE_URL . "/admin/product/{$product->id}/pictures/selection" ?>" class="btn">&plus;</a></div>
             </div>
 
             <div class="form-group ">

@@ -132,6 +132,7 @@ class Database
          */
         $this->stmt = $this->link->prepare($queryWithPlaceholders);
 
+
         /**
          * Variablen vorbereiten
          */
@@ -168,6 +169,7 @@ class Database
          * Query fertig "preparen": $stmt->bind_param() mit den entsprechenden Werten ausführen; aber nur, wenn es sich
          * um einen MySQL Query mit Parametern handelt (s. if-Statement). Hier können wir den Spread-Operator verwenden.
          */
+
         $this->stmt->bind_param($paramString, ...$paramValues);
 
         /**
@@ -178,6 +180,7 @@ class Database
         /**
          * Ergebnis aus dem Query holen und zurückgeben,
          */
+
         return $this->stmt->get_result();
     }
 
