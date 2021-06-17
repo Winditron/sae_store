@@ -84,7 +84,7 @@ class Product extends AbstractModel
         return $result;
     }
 
-    public function files()
+    public function pictures()
     {
         return Picture::findByProduct($this->id);
     }
@@ -197,6 +197,7 @@ class Product extends AbstractModel
         $database = new Database();
         $tablename = self::TABLENAME_PICTURES_MAP;
 
+        $bindedPictures = $this->filse
 
         $sql = "INSERT INTO {$tablename} (product_id, picture_id) VALUES ";
         $sql_values = [];
