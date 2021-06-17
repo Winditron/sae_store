@@ -1,5 +1,6 @@
 <?php
 
+use App\Controllers\Admin\AdminController;
 use App\Controllers\Admin\ProductController as AdminProductController;
 use App\Controllers\AuthController;
 use App\Controllers\ProductController;
@@ -24,7 +25,7 @@ return [
     /**
      * Admin routen
      */
-
+    '/admin/dashboard' => [AdminController::class, 'dashboard'], # startroute des Adminbereichs
     /**
      * Admin Product routen
      */
