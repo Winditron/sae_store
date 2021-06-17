@@ -5,6 +5,7 @@
                         <figure>
                             <?php echo $picture->getImgTag(); ?>
                         </figure>
+                        <strong><?php echo $picture->name; ?></strong>
                         <div class="actions">
                             <input type="checkbox" name="marked-pictures[<?php echo $picture->id; ?>]" id="marked-pictures[<?php echo $picture->id; ?>]">
                         </div>

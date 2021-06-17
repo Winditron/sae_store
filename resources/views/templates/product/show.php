@@ -2,11 +2,11 @@
     <div class="col">
         <div class="gallery">
             <figure>
-                <?php echo (!empty($product->files())) ? $product->files()[0]?->getImgTag() : ''; ?>
+                <?php echo (!empty($product->pictures())) ? $product->pictures()[0]?->getImgTag() : ''; ?>
             </figure>
             <div class="gallery-menue">
-<?php foreach ($product->files() as $file) {
-    echo $file->getImgTag();
+<?php foreach ($product->pictures() as $picture) {
+    echo $picture->getImgTag();
 }?>
             </div>
         </div>

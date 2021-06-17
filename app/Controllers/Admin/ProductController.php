@@ -117,9 +117,19 @@ class ProductController
             $picture_ids[] = $picture_id;
         }
 
-        $product->bindPictures($picture_ids);
+        [$result, $errors] = $product->bindPictures($picture_ids);
 
-        Session::set("success", ['Bilder wurden erfolgreich verknüpft']);
+        if (!empty($errors)) {
+            Session::set("errors", $errors);
+        }
+
+        if ($result) {
+            Session::set("success", ['Bilder wurden erfolgreich verknüpft!']);
+        } else {
+            $errors[] = "Es konnten keine Bilder verknüpft werden!";
+            Session::set("errors", $errors);
+        }
+
         Redirector::redirect(BASE_URL . "/admin/product/{$id}/edit");
     }
 

@@ -9,13 +9,13 @@
 
 
             <div class="edit-gallery">
-                <?php foreach ($product->files() as $file): ?>
+                <?php foreach ($product->pictures() as $picture): ?>
                     <div class="picture">
                         <figure>
-                            <?php echo $file->getImgTag(); ?>
+                            <?php echo $picture->getImgTag(); ?>
                         </figure>
                         <div class="actions">
-                            <button type="button" data-href="<?php echo BASE_URL . "/product/{$product->id}/picture/{$file->id}/unbind"; ?>" class="danger delete">&times;</button>
+                            <button type="button" data-href="<?php echo BASE_URL . "/product/{$product->id}/picture/{$picture->id}/unbind"; ?>" class="danger delete">&times;</button>
                         </div>
                     </div>
                 <?php endforeach;?>

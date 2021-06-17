@@ -7,6 +7,7 @@ use Core\Traits\HasSlug;
 use Core\Database;
 use Core\Traits\SoftDelete;
 use Core\Validator;
+use Core\Session;
 
 class Product extends AbstractModel
 {
@@ -190,22 +191,45 @@ class Product extends AbstractModel
 
     /**
      * Product mit einem/mehrere Bild/ern verknüpfen
+     * Gibt ein Array zurück aus indem steht ob die (bool) SQL Abfrage durchgeführt werden konnte und ob Errors vohanden sind
      */
-    public function bindPictures(array $picture_ids):bool
+    public function bindPictures(array $picture_ids):array
     {
         
         $database = new Database();
         $tablename = self::TABLENAME_PICTURES_MAP;
 
-        $bindedPictures = $this->filse
+        /**
+         * Es werden alle id der verknüpften Bilder benötigt, um später DoppeleEinträge zu verhindern
+         */
+        $bindedPictures = $this->pictures();
+        
+        $binded_ids = [];
 
+        foreach ($bindedPictures as $picture){
+            $binded_ids[] =  $picture->id;
+        }
+
+
+        
+        /**
+         * Hier wird die SQL-Abfrage zusammen gesetzt
+         */
         $sql = "INSERT INTO {$tablename} (product_id, picture_id) VALUES ";
         $sql_values = [];
         $values = [];
 
-        
+        $errors = [];
 
         foreach($picture_ids as $id){
+            $dopple_id = array_search($id, $binded_ids, true); 
+            var_dump($id, $dopple_id, $bindedPictures[$dopple_id]);
+
+            if($dopple_id !== false){
+                $errors[] = $bindedPictures[$dopple_id]->name . ' konnte nicht verknüpft werden!';
+                continue;
+            }
+
             $picture = Picture::findOrFail($id);
 
             
@@ -215,13 +239,20 @@ class Product extends AbstractModel
             $values['i:' . count($values )] =  $id;
             
         }
-    
+        
+        /**
+         * Falls Bilder hinzugefügt werden sollen, dann soll die SQL Abfrage ausgeführt werden, sonst nicht
+         */
+        $result = false;
+        
+        if(!empty($values)){
+            
+            $sql = $sql . join(", ", $sql_values);
+            $result = $database->query($sql, $values);
+            
+        };
+        
 
-        $sql = $sql . join(", ", $sql_values);
-
-
-        $results = $database->query($sql, $values);
-
-        return $results;
+        return[ $result ,  $errors];
     }
 }
