@@ -255,4 +255,5 @@ class Product extends AbstractModel
 
         return[ $result ,  $errors];
     }
+
 }

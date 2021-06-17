@@ -7,6 +7,9 @@ use Core\Models\AbstractFile;
 
 class Picture extends AbstractFile
 {
+    
+    const TABLENAME_PRODUCTS_MAP = "products_pictures_map";
+
     public int $id;
     public string $name;
     public string $path;
@@ -14,6 +17,7 @@ class Picture extends AbstractFile
     public string $crdate;
     public string $tstamp;
     public mixed $deleted_at;
+
 
     public function fill($data)
     {
@@ -36,12 +40,14 @@ class Picture extends AbstractFile
         $database = new Database();
 
         $tablename = self::getTablenameFromClassname();
+        $tablename_map = self::TABLENAME_PRODUCTS_MAP;
+
 
         $result = $database->query("
             SELECT  {$tablename}.*
             FROM    {$tablename}
-            JOIN    `products_pictures_map` on `pictures`.`id` = `products_pictures_map`.`picture_id`
-            WHERE   `products_pictures_map`.`product_id` = {$product_id}
+            JOIN    `{$tablename_map}` on `pictures`.`id` = `{$tablename_map}`.`picture_id`
+            WHERE   `{$tablename_map}`.`product_id` = {$product_id}
         ");
 
         $result= self::handleResult($result);
@@ -67,5 +73,24 @@ class Picture extends AbstractFile
     public function getImgTag():string
     {
         return sprintf('<img src="%s" alt="%s">', $this->getFilePath(true, true), $this->alttext);
+    }
+
+    public static function allNotBindedToProduct(int $product_id)
+    {
+        $database = new Database();
+        $tablename_map = self::TABLENAME_PRODUCTS_MAP;
+
+        $tablename = self::getTablenameFromClassname();
+        
+        $result = $database->query("
+            SELECT  `{$tablename}`.*
+            FROM    `{$tablename}`
+            LEFT JOIN    `{$tablename_map}` on `pictures`.`id` = `{$tablename_map}`.`picture_id`
+            WHERE   `{$tablename_map}`.`product_id` != {$product_id} OR `{$tablename_map}`.picture_id IS NULL
+        ");
+
+        $result= self::handleResult($result);
+
+        return $result;
     }
 }

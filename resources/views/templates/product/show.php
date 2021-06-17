@@ -5,9 +5,9 @@
                 <?php echo (!empty($product->pictures())) ? $product->pictures()[0]?->getImgTag() : ''; ?>
             </figure>
             <div class="gallery-menue">
-<?php foreach ($product->pictures() as $picture) {
-    echo $picture->getImgTag();
-}?>
+                <?php foreach ($product->pictures() as $picture) {
+                    echo $picture->getImgTag();
+                }?>
             </div>
         </div>
     </div>

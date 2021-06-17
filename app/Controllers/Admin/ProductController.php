@@ -94,7 +94,7 @@ class ProductController
     {
         $product = Product::findOrFail($id);
 
-        $pictures = Picture::all();
+        $pictures = Picture::allNotBindedToProduct($id);
 
         View::render('picture/selection', [
             'type' => 'Produkt',

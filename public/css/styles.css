@@ -4,4 +4,9 @@
   box-sizing: border-box;
 }
 
+img {
+  height: 100px;
+  width: auto;
+}
+
 /*# sourceMappingURL=styles.css.map */
