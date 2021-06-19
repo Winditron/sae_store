@@ -1,24 +1,22 @@
-<div class="signup">
-    <form action="<?php echo BASE_URL; ?>/sign-up/finish" method="post">
-        <h2 class="signup form-title"><i class="ri-user-fill"></i>Neues Konto anlegen</h2>
+<div class="product-form">
+    <form action="<?php echo BASE_URL; ?>/admin/user/<?php echo $user->id; ?>/edit/update" method="post">
+        <h2 class="signup form-title">Bearbeitung des Benutzerkontos #<?php echo $user->id ?></h2>
 
-        <p class="form-note">&lowast; -> benötigte Felder</p>
-
-        <div class="row">
+            <div class="row">
             <div class="form-group col">
                 <label for="firstname">Vorname:</label>
-                <input type="text" id="firstname" name="firstname">
+                <input type="text" id="firstname" name="firstname" value="<?php echo $user->firstname; ?>">
             </div>
 
             <div class="form-group col">
                 <label for="secondname">Nachname:</label>
-                <input type="text" id="secondname" name="secondname">
+                <input type="text" id="secondname" name="secondname" value="<?php echo $user->secondname; ?>">
             </div>
         </div>
 
         <div class="form-group">
             <label for="email">&lowast;Email-Adresse:</label>
-            <input type="email" id="email" name="email">
+            <input type="email" id="email" name="email" value="<?php echo $user->email; ?>">
         </div>
 
         <div class="form-group">
@@ -33,26 +31,26 @@
 
         <div class="form-group">
             <label for="phone">Telefonnummer:</label>
-            <input type="text" id="phone" name="phone">
+            <input type="text" id="phone" name="phone" value="<?php echo $user->phone; ?>">
         </div>
 
         <div class="form-group">
             <label for="address">Adresse:</label>
-            <input type="text" id="address" name="address">
+            <input type="text" id="address" name="address" value="<?php echo $user->address; ?>">
         </div>
 
         <div class="row" >
             <div class="form-group col">
                 <label for="country">ORT:</label>
-                <input type="text" id="country" name="country">
+                <input type="text" id="country" name="country" value="<?php echo $user->country; ?>">
             </div>
 
             <div class="form-group col">
                 <label for="zip">PLZ:</label>
-                <input type="text" id="zip" name="zip">
+                <input type="text" id="zip" name="zip" value="<?php echo $user->zip; ?>">
             </div>
         </div>
 
-        <button type="submit">registrieren</button>
+        <button type="submit">Speichern</button>
     </form>
 </div>

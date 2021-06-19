@@ -16,7 +16,6 @@ public string $phone;
 public string $address;
 public string $country;
 public string $zip;
-public ?string $avatar = null;
 public string $crdate;
 public string $tstamp;
 public mixed $deleted_at;

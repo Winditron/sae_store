@@ -41,5 +41,6 @@ return [
      * Admin User routen
      */
     '/admin/users' => [AdminUserController::class, 'index'], #  Auflistung aller Users
+    '/admin/user/{id}/edit' => [AdminUserController::class, 'edit'], # Bearbeitungsformular für ein UserKonto
 
 ];

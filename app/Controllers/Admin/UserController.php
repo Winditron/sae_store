@@ -23,12 +23,10 @@ class UserController
 
     public function edit(int $id)
     {
-        $product = Product::find($id);
-        $categories = Category::all();
+        $user = User::find($id);
 
-        View::render('admin/product/edit', [
-            'product' => $product,
-            'categories' => $categories,
+        View::render('admin/user/edit', [
+            'user' => $user,
         ]);
     }
 
