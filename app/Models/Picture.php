@@ -35,7 +35,10 @@ class Picture extends AbstractFile
         return true;
     }  
 
-    public static function findByProduct(int $product_id): array
+    /**
+     * findet alle Bilder oder nur ein angegebenes Bild, bei dem eine Verknüpfung zu einem Product besteht
+     */
+    public static function findByProduct(int $product_id, ?int $picture_id = null): array
     {
         $database = new Database();
 
@@ -43,17 +46,26 @@ class Picture extends AbstractFile
         $tablename_map = self::TABLENAME_PRODUCTS_MAP;
 
 
-        $result = $database->query("
-            SELECT  {$tablename}.*
-            FROM    {$tablename}
-            JOIN    `{$tablename_map}` on `pictures`.`id` = `{$tablename_map}`.`picture_id`
-            WHERE   `{$tablename_map}`.`product_id` = {$product_id}
-        ");
+        $sql = "    SELECT  {$tablename}.*
+                    FROM    {$tablename}
+                    JOIN    `{$tablename_map}` on `pictures`.`id` = `{$tablename_map}`.`picture_id`
+                    WHERE   `{$tablename_map}`.`product_id` = ?";
+
+        $parameter_values = ['i:product_id' => $product_id];
+        
+        if(!empty($picture_id)){
+            $sql = $sql . " AND `picture_id` = ?";
+            $parameter_values['i:picture_id'] = $picture_id;
+        }
+        
+        $result = $database->query($sql, $parameter_values);
 
         $result= self::handleResult($result);
 
         return $result;
     }
+
+    
 
     public function getFilePath(bool $absolute = false, bool $http = false):string 
     {
@@ -93,4 +105,5 @@ class Picture extends AbstractFile
 
         return $result;
     }
+
 }

@@ -44,13 +44,28 @@ class ProductController
             Redirector::redirect(BASE_URL . "/admin/product/{$product->id}/edit");
         }
 
+        /**
+         * verknüpfungen zu den Bilden löschen
+         */
+
+        // [$result, $errors_delete] => $product->unbindPictures($_POST['']);
+
+        // foreach($errors_delete as $error){
+        //     $errors[] = $error;
+        // }
+
+        /**
+         * Daten werden valiediert
+         */
         $errors = $product->validateFormData();
 
         if (!empty($errors)) {
             Session::set('errors', $errors);
         } else {
+            var_dump($product);
             $product->name = trim($_POST['name']);
             $product->slug = trim($_POST['slug']);
+            $product->highlight_picture = trim((int) $_POST['highlight-img']);
             $product->price = trim((float) $_POST['price']);
             $product->category = trim((int) $_POST['category']);
             $product->size = trim((int) $_POST['size']);

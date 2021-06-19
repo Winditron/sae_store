@@ -15,7 +15,9 @@
                             <?php echo $picture->getImgTag(); ?>
                         </figure>
                         <div class="actions">
+                            <!-- TODO umbauen über formular -->
                             <button type="button" data-href="<?php echo BASE_URL . "/api/admin/product/{$product->id}/picture/{$picture->id}/unbind"; ?>" class="danger delete">&times;</button>
+                            <input type="radio" name="highlight-img" id="highlight-img" value="<?php echo $picture->id; ?>" <?php echo ($picture->id === $product->highlight_picture) ? 'checked' : ''; ?>>
                         </div>
                     </div>
                 <?php endforeach;?>

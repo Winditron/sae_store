@@ -5,7 +5,7 @@
     </div>
 
     <div class="product-picture">
-        <a href="<?php echo BASE_URL . "/Shop/" . $product->slug; ?>"></a>
+        <a href="<?php echo BASE_URL . "/Shop/" . $product->slug; ?>"><?php echo $product->highlightPicture(true); ?></a>
     </div>
 
     <div class="row">

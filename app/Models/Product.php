@@ -18,6 +18,7 @@ class Product extends AbstractModel
     public int $id;
     public string $name;
     public string $slug;
+    public ?int $highlight_picture = null;
     public string $description;
     public float $price;
     public int $category;
@@ -34,6 +35,7 @@ class Product extends AbstractModel
         $this->id = $data['id'];
         $this->name = $data['name'];
         $this->slug = $data['slug'];
+        $this->highlight_picture = $data['highlight_picture'];
         $this->description = $data['description'];
         $this->price = $data['price'];
         $this->category = $data['category'];
@@ -54,9 +56,10 @@ class Product extends AbstractModel
 
         if(empty($this->id)){
 
-            $result = $database->query("INSERT INTO $tablename SET name = ?, slug = ?, description = ?, price = ?, category = ?, watering = ?, sun_location = ?, size = ?, stock = ?",[
+            $result = $database->query("INSERT INTO $tablename SET name = ?, slug = ?, highlight_picture = ?, description = ?, price = ?, category = ?, watering = ?, sun_location = ?, size = ?, stock = ?",[
                 's:name' => $this->name,
                 's:slug' => $this->slug,
+                'i:highlight_picture' => $this->highlight_picture,
                 's:description' => $this->description,
                 'i:price' => $this->price,
                 'i:category' => $this->category,
@@ -67,9 +70,10 @@ class Product extends AbstractModel
             ]);
 
         } else {
-            return $database->query("UPDATE  $tablename SET name = ?, slug = ?, description = ?, price = ?, category = ?, watering = ?, sun_location = ?, size = ?, stock = ? WHERE id = {$this->id}",[
+            return $database->query("UPDATE  $tablename SET name = ?, slug = ?, highlight_picture = ?,  description = ?, price = ?, category = ?, watering = ?, sun_location = ?, size = ?, stock = ? WHERE id = {$this->id}",[
                 's:name' => $this->name,
                 's:slug' => $this->slug,
+                'i:highlight_picture' => $this->highlight_picture,
                 's:description' => $this->description,
                 'i:price' => $this->price,
                 'i:category' => $this->category,
@@ -88,6 +92,11 @@ class Product extends AbstractModel
     public function pictures()
     {
         return Picture::findByProduct($this->id);
+    }
+
+    public function findBindedPicture(int $picture_id)
+    {
+        return Picture::findByProduct($this->id, $picture_id);
     }
 
     public function formatPrice ():string
@@ -124,11 +133,26 @@ class Product extends AbstractModel
         $validator->int((int)$_POST['category'],'Kategorie', true);
         $validator->int((int)$_POST['size'],'Die maximale Größe', true);
         $validator->int((int)$_POST['stock'],'Lagerbestand');
-
     /**
      * TODO beschreibung validieren
      */
         #$validator->textnum($_POST['description'],'Beschreibung');
+
+        /**
+         * Higlight bild validieren
+         */
+
+        if(is_int($_POST['highlight-img'])){
+
+            $highlighted_img = $this->findBindedPicture( (int) $_POST['highlight-img']);
+
+            if(empty($highlighted_img)){
+                $errors[] = "Das Highlight-Bild muss ein verknüpftes bild sein.";
+            }
+
+        } else {
+            $errors[] = "Das Highlight-Bild muss ganzzahlig sein.";
+        }
 
         /**
          * Hier wird jeder mögliche Watering wert durchgegangen und nachgeschaut, ob dieser mit dem übergebenen Wert übereinstimmt
@@ -165,6 +189,11 @@ class Product extends AbstractModel
         if (!$valid){
             $errors[] = "Der Standort ist kein gültiger Wert.";
         }
+
+
+        /*
+            Validierung von Inhalt der Mapping Tabelle
+         */
         
 
         $errors = $validator->getErrors();
@@ -187,7 +216,11 @@ class Product extends AbstractModel
         ]);
 
         return $results;
+
+        
     }
+
+
 
     /**
      * Product mit einem/mehrere Bild/ern verknüpfen
@@ -256,4 +289,51 @@ class Product extends AbstractModel
         return[ $result ,  $errors];
     }
 
+    /**
+     * Mit Hilfe dieser Funktion wird das Anzeige Bild des Produkts ausgegeben, als obeject oder als HtmlTag.
+     * Falls das Highlight Bild nicht gesetzt oder gefunden wurde nimmt die Funktion ein verknüpftes Bild.
+     */
+    public function highlightPicture(bool $htmlTag = false):array|string
+    {
+        $picture = $this->highlight_picture;
+
+        if(!empty($picture)){
+            $picture = $this->findBindedPicture($picture);
+        }
+
+        $result = [];  
+        
+        if($htmlTag){
+            $result = '';
+        }
+
+        if(!empty($picture)){
+            
+            $result = $picture;
+            
+            if($htmlTag){
+                $result = $picture[0]->getImgTag();
+            }
+
+        } else {
+
+            $picture = $this->pictures();
+
+            if(!empty($picture)){
+
+                $picture = $picture[0];
+
+                $result = $picture;
+                
+                if($htmlTag){
+                    $result = $picture->getImgTag();
+                }
+
+            }
+
+
+        }
+
+        return $result;
+    }
 }
