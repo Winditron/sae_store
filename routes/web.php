@@ -2,6 +2,7 @@
 
 use App\Controllers\Admin\AdminController;
 use App\Controllers\Admin\ProductController as AdminProductController;
+use App\Controllers\Admin\UserController as AdminUserController;
 use App\Controllers\AuthController;
 use App\Controllers\ProductController;
 
@@ -36,5 +37,9 @@ return [
     '/admin/product/{id}/edit/update' => [AdminProductController::class, 'update'], # Bearbeitungsformular für Produkte
     '/admin/product/{id}/pictures/selection' => [AdminProductController::class, 'pictureSelection'], # Bearbeitungsformular für Produkte
     '/admin/product/{id}/pictures/bind' => [AdminProductController::class, 'bindPictures'], # Bearbeitungsformular für Produkte
+    /**
+     * Admin User routen
+     */
+    '/admin/users' => [AdminUserController::class, 'index'], #  Auflistung aller Users
 
 ];
