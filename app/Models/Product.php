@@ -250,7 +250,7 @@ class Product extends AbstractModel
         foreach($picture_ids as $id){
             
             $sql_values[] = '?';
-            $values['i:picture_id' . count($values )] =  $id;
+            $values['i:picture_id-' . count($values ) - 1] =  $id;
             
         }
 
@@ -259,17 +259,28 @@ class Product extends AbstractModel
         /**
          * Es muss mindestens die Product id und ein Picture angegeben sein, um die SQL Abfrage auszuführen
          */
-        if(!empty($values['i:product_id']) && !empty($values['i:picture_id1'])){
+        if(!empty($values['i:product_id']) && !empty($values['i:picture_id-0'])){
             
             $sql = $sql . '(' . join(", ", $sql_values) . ')'; #Hier wird die Abfrage fertig gestellt
             
             $result = $database->query($sql, $values);
 
             /**
-             * Falls eines der gelöschten Bilder das Highlight Bild ist setze das highlight im Product auf null
+             * Falls eines der gelöschten Bilder das Highlight Bild ist setze das highlight im Product auf ein anderes verknüpftes Bild oder auf null
              */
             if(array_search($this->highlight_picture, $values, true)){
+
                 $this->highlight_picture = null;
+
+                /**
+                 * Falls es ein verfügbares verknüpftes Bild gibt setze es als Highlight Bild
+                 */
+                $binded_picture = $this->pictures();
+
+                if(!empty($binded_picture)){
+                    $this->highlight_picture = $binded_picture[0]->id;
+                }
+
                 $this->save();
             }
 
@@ -314,33 +325,41 @@ class Product extends AbstractModel
 
         foreach($picture_ids as $id){
             $dopple_id = array_search($id, $binded_ids, true); 
-            var_dump($id, $dopple_id, $bindedPictures[$dopple_id]);
+
 
             if($dopple_id !== false){
                 $errors[] = $bindedPictures[$dopple_id]->name . ' konnte nicht verknüpft werden!';
                 continue;
             }
-
-            $picture = Picture::findOrFail($id);
-
             
             $sql_values[] = '( ?, ?)';
         
-            $values['i:' . count($values )] =  $this->id;
-            $values['i:' . count($values )] =  $id;
+            $values['i:product_id-' . count($values )] =  $this->id;
+            $values['i:picture_id-' . count($values ) - 1] =  $id;
             
         }
         
         /**
-         * Falls Bilder hinzugefügt werden sollen, dann soll die SQL Abfrage ausgeführt werden, sonst nicht
+         * Falls Picture ids im Array sind, dann soll die SQL Abfrage ausgeführt werden, sonst nicht
          */
         $result = false;
-        
+
         if(!empty($values)){
             
             $sql = $sql . join(", ", $sql_values);
             $result = $database->query($sql, $values);
             
+            /**
+             * Falls noch kein Bild ein Highlight Bild ist setze eins nach dem hinzufügen
+             */
+            if(empty($this->highlight_picture)){
+
+                $this->highlight_picture = $values['i:picture_id-0'];
+                
+                $this->save();
+                
+            }
+
         };
         
 

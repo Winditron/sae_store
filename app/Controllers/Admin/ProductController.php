@@ -148,7 +148,7 @@ class ProductController
             Session::set("errors", $errors);
         }
 
-        Redirector::redirect(BASE_URL . "/admin/product/{$id}/edit");
+        #Redirector::redirect(BASE_URL . "/admin/product/{$id}/edit");
     }
 
 }
