@@ -45,16 +45,6 @@ class ProductController
         }
 
         /**
-         * verknüpfungen zu den Bilden löschen
-         */
-
-        // [$result, $errors_delete] => $product->unbindPictures($_POST['']);
-
-        // foreach($errors_delete as $error){
-        //     $errors[] = $error;
-        // }
-
-        /**
          * Daten werden valiediert
          */
         $errors = $product->validateFormData();
@@ -62,7 +52,10 @@ class ProductController
         if (!empty($errors)) {
             Session::set('errors', $errors);
         } else {
-            var_dump($product);
+
+            /**
+             * Einträge speichern
+             */
             $product->name = trim($_POST['name']);
             $product->slug = trim($_POST['slug']);
             $product->highlight_picture = trim((int) $_POST['highlight-img']);
@@ -75,6 +68,16 @@ class ProductController
             $product->sun_location = trim($_POST['sun_location']);
 
             $product->save();
+
+            /**
+             * Verknüpfungen zu den Bilden löschen
+             */
+            $delete_pictures = [];
+            foreach ($_POST['delete-imgs'] as $picture_id => $on) {
+                $delete_pictures[] = $picture_id;
+            }
+
+            $product->unbindPictures($delete_pictures);
 
             Session::set('success', ['Erfolgreich gespeichert.']);
         }

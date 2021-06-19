@@ -139,15 +139,43 @@ class Product extends AbstractModel
         #$validator->textnum($_POST['description'],'Beschreibung');
 
         /**
+         * deleted imges array validieren
+         * es dürfen nur zahlen sein
+         */
+        if (is_array($_POST['delete-imgs']) && !empty($_POST['delete-imgs'])){
+
+            $valid = true;
+            
+            foreach($_POST['delete-imgs'] as $picture_id => $on){
+                if(!is_int($picture_id)){
+                    $valid = false;
+                }
+            }
+
+            if (!$valid){
+                $errors[] = "Es konnte keine Bildverknüpfung gelöscht werden"; 
+            }
+        }
+
+
+
+
+        /**
          * Higlight bild validieren
          */
 
-        if(is_int($_POST['highlight-img'])){
+        if(is_int($_POST['highlight-img'])){ 
 
-            $highlighted_img = $this->findBindedPicture( (int) $_POST['highlight-img']);
+            if(!array_search( (int)$_POST['highlight-img'],  $_POST['delete-imgs'], true)){
 
-            if(empty($highlighted_img)){
-                $errors[] = "Das Highlight-Bild muss ein verknüpftes bild sein.";
+                $highlighted_img = $this->findBindedPicture( (int) $_POST['highlight-img']);
+    
+                if(empty($highlighted_img)){
+                    $errors[] = "Das Highlight-Bild muss ein verknüpftes bild sein.";
+                }
+
+            } else {
+                $errors[] = "Das Highlight-Bild darf keines von den glöschten sein.";
             }
 
         } else {
@@ -202,22 +230,52 @@ class Product extends AbstractModel
     }
 
     /**
-     * löscht eine Verbindung von dem Product zu einem Bild
+     * löscht eine oder mehere Verbindungen von einem Product zu einem Bild
      */
-    public function unbindPicture(int $picture_id):bool
+    public function unbindPictures(array $picture_ids):bool
     {
-        $database = new Database();
 
+        $database = new Database();
         $tablename = self::TABLENAME_PICTURES_MAP;
 
-        $results = $database->query("DELETE FROM {$tablename} WHERE product_id = ? AND picture_id = ?", [
-            'i:product_id' => $this->id,
-            'i:picture_id' => $picture_id
-        ]);
+        /**
+         * Hier wird die SQL-Abfrage zusammen gesetzt
+         */
+        $sql = "DELETE FROM `products_pictures_map` WHERE `product_id` = ? AND `picture_id` IN ";
+        $sql_values = [];#zb (?,?,?) sind die Platzhlalter um später smt die Werte zu binden
+        $values = [];# sind die Werte im Array, die die Query benötigt
 
-        return $results;
+        $values['i:product_id'] = $this->id;
 
+        foreach($picture_ids as $id){
+            
+            $sql_values[] = '?';
+            $values['i:picture_id' . count($values )] =  $id;
+            
+        }
+
+        $result = false;
         
+        /**
+         * Es muss mindestens die Product id und ein Picture angegeben sein, um die SQL Abfrage auszuführen
+         */
+        if(!empty($values['i:product_id']) && !empty($values['i:picture_id1'])){
+            
+            $sql = $sql . '(' . join(", ", $sql_values) . ')'; #Hier wird die Abfrage fertig gestellt
+            
+            $result = $database->query($sql, $values);
+
+            /**
+             * Falls eines der gelöschten Bilder das Highlight Bild ist setze das highlight im Product auf null
+             */
+            if(array_search($this->highlight_picture, $values, true)){
+                $this->highlight_picture = null;
+                $this->save();
+            }
+
+        }
+
+        return $result;    
     }
 
 
