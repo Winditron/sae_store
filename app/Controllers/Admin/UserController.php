@@ -2,15 +2,23 @@
 
 namespace App\Controllers\Admin;
 
-use App\Models\Picture;
-use App\Models\Product;
 use App\Models\User;
 use Core\Helpers\Redirector;
+use Core\Middlewares\AuthMiddleware;
 use Core\Session;
 use Core\View;
 
 class UserController
 {
+
+    public function __construct()
+    {
+        /**
+         * Eingeloggter User muss ein Admin sein um functionen aufrufen zu können
+         */
+        AuthMiddleware::isAdminOrFail();
+    }
+
     public function index()
     {
         $users = User::all();
@@ -53,6 +61,23 @@ class UserController
             $user->address = trim($_POST['address']);
             $user->country = trim($_POST['country']);
             $user->zip = trim($_POST['zip']);
+            $user->zip = trim($_POST['zip']);
+
+            /**
+             * Bearbeiten wir uns gerade nicht selber?
+             */
+            if (User::getLoggedIn()->id !== $user->id) {
+                /**
+                 * Wenn wir uns nicht selbst bearbeiten, dann prüfen wir, ob die is_admin Checkbox geklickt worden ist,
+                 * und wenn ja, dann vergeben wir Admin Berechtigungen oder entfernen sie, wenn die Checkbox nicht
+                 * ausgewählt war.
+                 */
+                if (isset($_POST['is_admin']) && $_POST['is_admin'] === 'on') {
+                    $user->is_admin = true;
+                } else {
+                    $user->is_admin = false;
+                }
+            }
 
             $user->save();
 
@@ -83,49 +108,6 @@ class UserController
 
         Session::set("success", ["Produkt #{$id} wurde erfolgreich gelöscht"]);
         Redirector::redirect(BASE_URL . '/admin/users');
-    }
-
-    public function pictureSelection(int $id)
-    {
-        $product = Product::findOrFail($id);
-
-        $pictures = Picture::allNotBindedToProduct($id);
-
-        View::render('picture/selection', [
-            'type' => 'Produkt',
-            'title' => $product->name,
-            'pictures' => $pictures,
-            'confirmUrl' => BASE_URL . "/admin/product/{$product->id}/pictures/bind",
-            'abortUrl' => BASE_URL . "/admin/product/{$product->id}/edit",
-
-        ]);
-
-    }
-
-    public function bindPictures(int $id)
-    {
-        $product = Product::findOrFail($id);
-
-        $picture_ids = [];
-
-        foreach ($_POST["marked-pictures"] as $picture_id => $checked) {
-            $picture_ids[] = $picture_id;
-        }
-
-        [$result, $errors] = $product->bindPictures($picture_ids);
-
-        if (!empty($errors)) {
-            Session::set("errors", $errors);
-        }
-
-        if ($result) {
-            Session::set("success", ['Bilder wurden erfolgreich verknüpft!']);
-        } else {
-            $errors[] = "Es konnten keine Bilder verknüpft werden!";
-            Session::set("errors", $errors);
-        }
-
-        #Redirector::redirect(BASE_URL . "/admin/product/{$id}/edit");
     }
 
 }

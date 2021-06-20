@@ -201,7 +201,7 @@ class Product extends AbstractModel
             $errors[] = "Der Wasserbedarf ist kein gültiger Wert.";
         }
 
-                /**
+        /**
          * Hier wird jeder mögliche Watering wert durchgegangen und nachgeschaut, ob dieser mit dem übergebenen Wert übereinstimmt
          */
         $validSunLocation = $this->sunlocationValues();

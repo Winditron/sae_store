@@ -6,11 +6,21 @@ use App\Models\Category;
 use App\Models\Picture;
 use App\Models\Product;
 use Core\Helpers\Redirector;
+use Core\Middlewares\AuthMiddleware;
 use Core\Session;
 use Core\View;
 
 class ProductController
 {
+
+    public function __construct()
+    {
+        /**
+         * Eingeloggter User muss ein Admin sein um functionen aufrufen zu können
+         */
+        AuthMiddleware::isAdminOrFail();
+    }
+
     public function index()
     {
         $products = Product::all();

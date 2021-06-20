@@ -35,9 +35,9 @@ class AuthController
             }
 
             if ($user->is_admin) {
-                $user->login(BASE_URL . '/admin', $remember);
+                $user->login(BASE_URL . '/admin/dashboard', $remember);
             } else {
-                $user->login(BASE_URL . '/home', $remember);
+                $user->login(BASE_URL . '/Shop', $remember);
             }
         }
 

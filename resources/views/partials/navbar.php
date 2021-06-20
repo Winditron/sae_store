@@ -14,7 +14,7 @@ if (App\Models\User::isLoggedIn()): ?>
     <?php if (App\Models\User::getLoggedIn()->is_admin): ?>
 			<a class="navlink" href="<?php echo BASE_URL . "/admin/dashboard"; ?>"><i class="ri-admin-line"></i></a>
 	<?php else: ?>
-            <a class="navlink" href="<?php echo BASE_URL . "/"; ?>"><i class="ri-user-settings-line"></i></a>
+            <a class="navlink" href="<?php echo BASE_URL . "/profile/dashboard"; ?>"><i class="ri-user-settings-line"></i></a>
     <?php endif;?>
             <a class="navlink" href="<?php echo BASE_URL . "/logout"; ?>"><i class="ri-logout-box-line"></i></i></a>
 <?php else: ?>

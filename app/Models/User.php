@@ -87,7 +87,7 @@ public mixed $deleted_at;
      * Wenn die übermittelten POST Daten invaliede sind, dann wird ein Array mit Fehlermeldungen returnt
      * Es gibt unterschiedliche Profile zb signup  dort ist password und email required
      */
-    public function validateFormData( string $profil):array
+    public function validateFormData( string $profile):array
     {
         $errors = [];
         $validator = new Validator();
@@ -95,25 +95,43 @@ public mixed $deleted_at;
         /**
          * zb beim AdminController mussen nicht die Email und das Passwort angegeben werden
          */
-        if($profile === "admin"){
-            
-            $validator->email($_POST['email'], 'Email-Adresse', false);
-            $validator->password($_POST['password'], 'Passwort', false);
-        
-        } elseif ($profile === "signup") {
+        if($profile === 'admin'){
 
+            if (!empty($_POST['email'])) {
+                $validator->email($_POST['email'], 'Email-Adresse');
+            }
+
+            if (!empty($_POST['password'])) {
+                $validator->password($_POST['password'], 'Passwort');
+            }
+
+            if (!empty($_POST['is_admin'])) {
+                $validator->checkbox($_POST['is_admin'], 'Administrator');
+            }
+
+        } elseif ($profile === 'profile') {
+
+            if (!empty($_POST['email'])) {
+                $validator->email($_POST['email'], 'Email-Adresse');
+            }
+
+            if (!empty($_POST['password'])) {
+                $validator->password($_POST['password'], 'Passwort');
+            }
+            
+        } elseif ($profile === 'signup') {
+            
             $validator->email($_POST['email'], 'Email-Adresse', true);
             $validator->password($_POST['password'], 'Passwort', true);
-
+            
         }
-
+        
         $validator->letters($_POST['firstname'], 'Vorname', false);
         $validator->letters($_POST['secondname'], 'Nachname', false);
         $validator->tel($_POST['phone'], 'Phone', false);
         $validator->textnum($_POST['address'], 'Adresse', false);
         $validator->letters($_POST['country'], 'Ort', false);
         $validator->int((int) $_POST['zip'], 'PLZ', false);
-        $validator->checkbox($_POST['is_admin'], 'Administrator', false);
         
         
 

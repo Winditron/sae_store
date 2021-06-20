@@ -1,6 +1,6 @@
 <div class="product-form">
-    <form action="<?php echo BASE_URL; ?>/admin/user/<?php echo $user->id; ?>/edit/update" method="post">
-        <h2 class="signup form-title">Bearbeitung des Benutzerkontos #<?php echo $user->id ?></h2>
+    <form action="<?php echo BASE_URL; ?>/profile/edit/update" method="post">
+        <h2 class="signup form-title">Kontoeinstellungen</h2>
 
             <div class="row">
             <div class="form-group col">
@@ -50,13 +50,6 @@
                 <input type="text" id="zip" name="zip" value="<?php echo $user->zip; ?>">
             </div>
         </div>
-
-        <?php if (App\Models\User::getLoggedIn()->id !== $user->id): ?>
-            <div class="form-group col">
-                <label for="is_admin">Administrator:</label>
-                <input type="checkbox" id="is_admin" name="is_admin" <?php echo ($user->is_admin) ? 'checked' : ''; ?>>
-            </div>
-        <?php endif;?>
 
         <button type="submit">Speichern</button>
     </form>

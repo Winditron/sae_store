@@ -5,6 +5,7 @@ use App\Controllers\Admin\ProductController as AdminProductController;
 use App\Controllers\Admin\UserController as AdminUserController;
 use App\Controllers\AuthController;
 use App\Controllers\ProductController;
+use App\Controllers\ProfileController;
 
 return [
 
@@ -22,6 +23,14 @@ return [
     '/logout' => [AuthController::class, 'logout'], #logout prozess
     '/sign-up' => [AuthController::class, 'signupForm'], # signup formular
     '/sign-up/finish' => [AuthController::class, 'signup'], # signup prozess
+
+    /**
+     * User Profil
+     */
+    '/profile/dashboard' => [ProfileController::class, 'dashboard'], # startroute eines eingeloggten USers
+    '/profile/edit' => [ProfileController::class, 'edit'], # Bearbeitungsformular für ein Profil
+    '/profile/edit/update' => [ProfileController::class, 'update'], # Neue Einträge speichern
+    '/profile/orders' => [ProfileController::class, 'orders'], # Auflistung aller Bestellungen
 
     /**
      * Admin routen
