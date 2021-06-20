@@ -2,7 +2,6 @@
 
 namespace App\Controllers\Admin;
 
-use App\Models\Category;
 use App\Models\Picture;
 use App\Models\Product;
 use App\Models\User;
@@ -32,21 +31,12 @@ class UserController
 
     public function update(int $id)
     {
-
-        $errors = [];
-
-        $product = Product::find($id);
-
-        if (empty($product)) {
-            $errors[] = "Produkt konnte nicht gefunden werden.";
-            Session::set('errors', $errors);
-            Redirector::redirect(BASE_URL . "/admin/product/{$product->id}/edit");
-        }
+        $user = User::findOrFail($id);
 
         /**
          * Daten werden valiediert
          */
-        $errors = $product->validateFormData();
+        $errors = $user->validateFormData('admin');
 
         if (!empty($errors)) {
             Session::set('errors', $errors);
@@ -55,56 +45,44 @@ class UserController
             /**
              * Einträge speichern
              */
-            $product->name = trim($_POST['name']);
-            $product->slug = trim($_POST['slug']);
-            $product->highlight_picture = trim((int) $_POST['highlight-img']);
-            $product->price = trim((float) $_POST['price']);
-            $product->category = trim((int) $_POST['category']);
-            $product->size = trim((int) $_POST['size']);
-            $product->stock = trim((int) $_POST['stock']);
-            $product->description = trim($_POST['description']);
-            $product->watering = trim($_POST['watering']);
-            $product->sun_location = trim($_POST['sun_location']);
+            $user->firstname = trim($_POST['firstname']);
+            $user->secondname = trim($_POST['secondname']);
+            $user->email = trim($_POST['email']);
+            $user->setPassword($_POST['password']);
+            $user->phone = trim($_POST['phone']);
+            $user->address = trim($_POST['address']);
+            $user->country = trim($_POST['country']);
+            $user->zip = trim($_POST['zip']);
 
-            $product->save();
-
-            /**
-             * Verknüpfungen zu den Bilden löschen
-             */
-            $delete_pictures = [];
-            foreach ($_POST['delete-imgs'] as $picture_id => $on) {
-                $delete_pictures[] = $picture_id;
-            }
-
-            $product->unbindPictures($delete_pictures);
+            $user->save();
 
             Session::set('success', ['Erfolgreich gespeichert.']);
         }
 
-        Redirector::redirect(BASE_URL . "/admin/product/{$product->id}/edit");
+        Redirector::redirect(BASE_URL . "/admin/user/{$user->id}/edit");
 
     }
 
     public function confirmDelete(int $id)
     {
-        $product = Product::findOrFail($id);
+        $user = User::findOrFail($id);
 
         View::render('admin/confirmDelete', [
-            'type' => 'Produkt',
-            'title' => $product->name,
-            'confirmUrl' => BASE_URL . "/admin/product/{$product->id}/delete",
-            'abortUrl' => BASE_URL . "/admin/products",
+            'type' => 'User',
+            'title' => $user->email,
+            'confirmUrl' => BASE_URL . "/admin/user/{$user->id}/delete",
+            'abortUrl' => BASE_URL . "/admin/users",
         ]);
     }
 
     public function delete(int $id)
     {
-        $product = Product::findOrFail($id);
+        $user = User::findOrFail($id);
 
-        $product->delete();
+        $user->delete();
 
         Session::set("success", ["Produkt #{$id} wurde erfolgreich gelöscht"]);
-        Redirector::redirect(BASE_URL . '/admin/products');
+        Redirector::redirect(BASE_URL . '/admin/users');
     }
 
     public function pictureSelection(int $id)

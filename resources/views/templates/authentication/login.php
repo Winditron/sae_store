@@ -3,8 +3,6 @@
 
         <h2 class="form-title"><?php echo Core\Config::get('app.appname'); ?></h2>
 
-        <?php require_once __DIR__ . '/../../partials/ErrorAndSuccessMessages.php';?>
-
         <div class="form-group">
             <input type="text" name="email" id="email" placeholder="Email-Adresse" required>
         </div>

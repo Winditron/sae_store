@@ -34,13 +34,16 @@ return [
     '/admin/product/{id}/delete/confirm' => [AdminProductController::class, 'confirmDelete'], #  Bestetigung des löschen eines Produkts
     '/admin/product/{id}/delete' => [AdminProductController::class, 'delete'], #  Löschen eines Produkts (Soft delete)
     '/admin/product/{id}/edit' => [AdminProductController::class, 'edit'], # Bearbeitungsformular für Produkte
-    '/admin/product/{id}/edit/update' => [AdminProductController::class, 'update'], # Bearbeitungsformular für Produkte
-    '/admin/product/{id}/pictures/selection' => [AdminProductController::class, 'pictureSelection'], # Bearbeitungsformular für Produkte
-    '/admin/product/{id}/pictures/bind' => [AdminProductController::class, 'bindPictures'], # Bearbeitungsformular für Produkte
+    '/admin/product/{id}/edit/update' => [AdminProductController::class, 'update'], # Neue Einträge speichern
+    '/admin/product/{id}/pictures/selection' => [AdminProductController::class, 'pictureSelection'], # Bilderauswahl
+    '/admin/product/{id}/pictures/bind' => [AdminProductController::class, 'bindPictures'], # Ausgeweählte Bilder hinzufügen
     /**
      * Admin User routen
      */
     '/admin/users' => [AdminUserController::class, 'index'], #  Auflistung aller Users
+    '/admin/user/{id}/delete/confirm' => [AdminUserController::class, 'confirmDelete'], #  Bestetigung des löschen eines Users
+    '/admin/user/{id}/delete' => [AdminUserController::class, 'delete'], #  Löschen eines Users (Soft delete)
     '/admin/user/{id}/edit' => [AdminUserController::class, 'edit'], # Bearbeitungsformular für ein UserKonto
+    '/admin/user/{id}/edit/update' => [AdminUserController::class, 'update'], # Neue Einträge speichern
 
 ];

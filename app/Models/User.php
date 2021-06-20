@@ -4,9 +4,14 @@ namespace App\Models;
 
 use Core\Models\AbstractUser;
 use Core\Database;
+use Core\Traits\SoftDelete;
+use Core\Validator;
 
 class User extends AbstractUser
 {
+
+    use SoftDelete;
+
 public int $id;
 public string $firstname;
 public string $secondname;
@@ -16,6 +21,7 @@ public string $phone;
 public string $address;
 public string $country;
 public string $zip;
+public bool $is_admin = false;
 public string $crdate;
 public string $tstamp;
 public mixed $deleted_at;
@@ -36,7 +42,7 @@ public mixed $deleted_at;
         $this->tstamp = $data['tstamp'];
         $this->deleted_at = $data['deleted_at'];      
     }
-
+    
     public function save ():bool
     {
         $database = new Database();
@@ -57,11 +63,72 @@ public mixed $deleted_at;
                 'i:is_admin' => $this->is_admin
             ]);
 
+        }else {
+            return $database->query("UPDATE  $tablename SET firstname = ?, secondname = ?, email = ?, password = ?, phone = ?, address = ?, country = ?, zip = ?, is_admin = ? WHERE id = ? ",[
+                's:firstname' => $this->firstname,
+                's:secondname' => $this->secondname,
+                's:email' => $this->email,
+                's:password' => $this->password,
+                's:phone' => $this->phone,
+                's:address' => $this->address,
+                's:country' => $this->country,
+                's:zip' => $this->zip,
+                'i:is_admin' => $this->is_admin,
+                'i:id' => $this->id
+            ]);
         }
 
         $this->handleInsertResult($database);
 
         return $result;
+    }
+
+    /**
+     * Wenn die übermittelten POST Daten invaliede sind, dann wird ein Array mit Fehlermeldungen returnt
+     * Es gibt unterschiedliche Profile zb signup  dort ist password und email required
+     */
+    public function validateFormData( string $profil):array
+    {
+        $errors = [];
+        $validator = new Validator();
+
+        /**
+         * zb beim AdminController mussen nicht die Email und das Passwort angegeben werden
+         */
+        if($profile === "admin"){
+            
+            $validator->email($_POST['email'], 'Email-Adresse', false);
+            $validator->password($_POST['password'], 'Passwort', false);
+        
+        } elseif ($profile === "signup") {
+
+            $validator->email($_POST['email'], 'Email-Adresse', true);
+            $validator->password($_POST['password'], 'Passwort', true);
+
+        }
+
+        $validator->letters($_POST['firstname'], 'Vorname', false);
+        $validator->letters($_POST['secondname'], 'Nachname', false);
+        $validator->tel($_POST['phone'], 'Phone', false);
+        $validator->textnum($_POST['address'], 'Adresse', false);
+        $validator->letters($_POST['country'], 'Ort', false);
+        $validator->int((int) $_POST['zip'], 'PLZ', false);
+        $validator->checkbox($_POST['is_admin'], 'Administrator', false);
+        
+        
+
+        $validator->compare([
+            $_POST['password'],
+            'Password',
+        ], [
+            $_POST['password-repeat'],
+            'Password wiederholen',
+        ]);
+
+
+        $errors = $validator->getErrors();
+
+        return $errors;
     }
 }
 

@@ -70,7 +70,7 @@ class Product extends AbstractModel
             ]);
 
         } else {
-            return $database->query("UPDATE  $tablename SET name = ?, slug = ?, highlight_picture = ?,  description = ?, price = ?, category = ?, watering = ?, sun_location = ?, size = ?, stock = ? WHERE id = {$this->id}",[
+            return $database->query("UPDATE  $tablename SET name = ?, slug = ?, highlight_picture = ?,  description = ?, price = ?, category = ?, watering = ?, sun_location = ?, size = ?, stock = ? WHERE id = ?",[
                 's:name' => $this->name,
                 's:slug' => $this->slug,
                 'i:highlight_picture' => $this->highlight_picture,
@@ -81,6 +81,7 @@ class Product extends AbstractModel
                 's:sun_location' => $this->sun_location,
                 'i:size' => $this->size,
                 'i:stock' => $this->stock,
+                'i:id' => $this->id
             ]);
         }
 
@@ -216,13 +217,7 @@ class Product extends AbstractModel
 
         if (!$valid){
             $errors[] = "Der Standort ist kein gültiger Wert.";
-        }
-
-
-        /*
-            Validierung von Inhalt der Mapping Tabelle
-         */
-        
+        }        
 
         $errors = $validator->getErrors();
 

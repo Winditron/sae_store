@@ -5,7 +5,6 @@ namespace App\Controllers;
 use App\Models\User;
 use Core\Helpers\Redirector;
 use Core\Session;
-use Core\Validator;
 use Core\View;
 
 class AuthController
@@ -58,27 +57,9 @@ class AuthController
 
     public function signup()
     {
+        $user = new User();
 
-        $validator = new Validator();
-
-        $validator->letters($_POST['firstname'], 'Vorname', false);
-        $validator->letters($_POST['secondname'], 'Nachname', false);
-        $validator->email($_POST['email'], 'Email-Adresse', true);
-        $validator->password($_POST['password'], 'Passwort', true);
-        $validator->tel($_POST['phone'], 'Phone', false);
-        $validator->textnum($_POST['address'], 'Adresse', false);
-        $validator->letters($_POST['country'], 'Ort', false);
-        $validator->int((int) $_POST['zip'], 'PLZ', false);
-
-        $validator->compare([
-            $_POST['password'],
-            'Password',
-        ], [
-            $_POST['password-repeat'],
-            'Password wiederholen',
-        ]);
-
-        $errors = $validator->getErrors();
+        $errors = $user->validateFormData('signup');
 
         if (!empty(User::findByEmail($_POST['email']))) {
             $errors[] = 'Die angegebene Email Adresse wird bereitz von einem Konto benutzt!';
@@ -86,10 +67,10 @@ class AuthController
 
         if (!empty($errors)) {
             Session::set('errors', $errors);
+            exit;
             Redirector::redirect(BASE_URL . '/sign-up');
         }
 
-        $user = new User();
         $user->firstname = trim($_POST['firstname']);
         $user->secondname = trim($_POST['secondname']);
         $user->email = trim($_POST['email']);

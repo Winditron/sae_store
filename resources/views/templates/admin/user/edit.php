@@ -51,6 +51,11 @@
             </div>
         </div>
 
+            <div class="form-group col">
+                <label for="is_admin">Administrator:</label>
+                <input type="checkbox" id="is_admin" name="is_admin" <?php echo ($user->is_admin) ? 'checked' : ''; ?>>
+            </div>
+
         <button type="submit">Speichern</button>
     </form>
 </div>
