@@ -13,7 +13,7 @@
             <span>Preis:</span>
         </div>
         <div class="actuall-price col">
-            <span>&euro; <?php echo $product->formatPrice(); ?></span>
+            <span><?php echo Core\Helpers\Formatter::formatPrice($product->price); ?></span>
         </div>
     </div>
 

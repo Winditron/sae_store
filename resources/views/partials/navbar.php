@@ -5,6 +5,7 @@
             <a href="<?php echo BASE_URL . "/Shop"; ?>" class="navlink">Shop</a>
         </div>
     <div class="col">
+    <a class="navlink basket" href="<?php echo BASE_URL . "/basket"; ?>"><i class="ri-shopping-cart-fill"></i><div class="basket-count"></div></a>
 <?php
 /**
  * Überprüfung ob user eigelogt ist

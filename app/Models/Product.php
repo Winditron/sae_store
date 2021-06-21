@@ -8,6 +8,7 @@ use Core\Database;
 use Core\Traits\SoftDelete;
 use Core\Validator;
 use Core\Session;
+use Core\Traits\HasPrice;
 
 class Product extends AbstractModel
 {
@@ -98,11 +99,6 @@ class Product extends AbstractModel
     public function findBindedPicture(int $picture_id)
     {
         return Picture::findByProduct($this->id, $picture_id);
-    }
-
-    public function formatPrice ():string
-    {
-        return number_format($this->price , 2, ",", " " );
     }
 
     public function wateringValues():array

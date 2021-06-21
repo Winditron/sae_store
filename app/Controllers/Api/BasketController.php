@@ -5,6 +5,9 @@ namespace App\Controllers\Api;
 use App\Models\Basket;
 use Core\ApiResponse;
 
+/**
+ * Mann muss nicht eingeloggt sein um im Warekorb Aktionen zu tätigen
+ */
 class BasketController
 {
 
@@ -12,7 +15,7 @@ class BasketController
     {
         $basket = Basket::get();
 
-        return ApiResponse::json($basket->basket);
+        return ApiResponse::json($basket->items);
     }
 
     public function add(int $id, int $quantity)
@@ -29,6 +32,15 @@ class BasketController
         $basket = Basket::get();
 
         $result = $basket->removeProduct($id, $quantity);
+
+        return ApiResponse::json($result);
+    }
+
+    public function set(int $id, int $quantity)
+    {
+        $basket = Basket::get();
+
+        $result = $basket->setProduct($id, $quantity);
 
         return ApiResponse::json($result);
     }

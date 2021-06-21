@@ -4,6 +4,7 @@ use App\Controllers\Admin\AdminController;
 use App\Controllers\Admin\ProductController as AdminProductController;
 use App\Controllers\Admin\UserController as AdminUserController;
 use App\Controllers\AuthController;
+use App\Controllers\BasketController;
 use App\Controllers\ProductController;
 use App\Controllers\ProfileController;
 
@@ -14,6 +15,11 @@ return [
      */
     '/Shop' => [ProductController::class, 'index'], # Auflistung aller Produkte
     '/Shop/{slug}' => [ProductController::class, 'show'], #Produktübersicht
+
+    /**
+     * Warenkorb (Basket) routen
+     */
+    '/basket' => [BasketController::class, 'index'], #Produktübersicht
 
     /**
      * login & signup routen

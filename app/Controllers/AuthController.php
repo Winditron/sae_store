@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\Basket;
 use App\Models\User;
 use Core\Helpers\Redirector;
 use Core\Session;
@@ -47,7 +48,13 @@ class AuthController
 
     public function logout()
     {
-        USer::logout(BASE_URL);
+        /**
+         * Warenkorb entleeren beim Ausloggen
+         */
+        $basket = Basket::get();
+        $basket->delete();
+
+        User::logout(BASE_URL);
     }
 
     public function signupForm()
