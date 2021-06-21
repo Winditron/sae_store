@@ -25,12 +25,70 @@ document.querySelectorAll("button.add-to-basket").forEach((element) => {
     element.addEventListener("click", (e) => {
         const url = e.currentTarget.dataset.href;
 
+
+
         fetch(url,{
             method: 'POST'
-        });
+        })
+            .then((response) => {
+                if(response.status === 200){
+                    response.json().then(data => {
+                        
+                        
+                        let { success , errors, response } = data;
+                        
+                        if(success === true){
+
+                            /**
+                            * Warenkorbzähler
+                            */
+                            let quantity = url.split("/");
+                            quantity = parseInt(quantity.pop());
+                            const basket_count = document.querySelector('div.js_basket-count');
+                            basket_count.textContent = parseInt(basket_count.textContent) + quantity;
+                        }
+
+                    });
+                }
+            });
+
 
     })
 })
+
+
+/**
+ * Neu Berechnung von Total im Warenkorb
+*/
+const calculateTotalAndSetCounter = () => {
+
+    let total = 0.00;
+    const BASE_URL = document.querySelector("base").href;
+
+    fetch(BASE_URL + "/api/basket",{
+        method: 'POST'
+    })
+        .then((response) => {
+            if(response.status === 200){
+                response.json().then((data) => {
+                    let count = 0;
+                    data.forEach((basket_item) => {
+                        total += basket_item.price * basket_item.quantity;
+                        count = count + parseInt(basket_item.quantity);
+                    });
+
+                    document.querySelector("div.js_total").textContent = new Intl.NumberFormat('de-AT', { style: 'currency', currency: 'EUR' }).format(total);
+
+                    /**
+                    * Warenkorbzähler
+                    */
+                    const basket_count = document.querySelector('div.js_basket-count');
+                    basket_count.textContent = count;
+
+                });
+            }
+        });
+}
 
 /**
  * Produkt menge ändern im Warenkorb
@@ -39,9 +97,6 @@ document.querySelectorAll("input.basket-change-quatity").forEach((element) => {
     element.addEventListener("change", (e) => {
         const url = e.currentTarget.dataset.href;
         const value = e.currentTarget.value;
-
-        
-        console.log(url + value);
 
         fetch(url + value,{
             method: 'POST'
@@ -55,11 +110,15 @@ document.querySelectorAll("input.basket-change-quatity").forEach((element) => {
                         const row = e.target.closest('div.row');
                         
                         if( value <= 0 && success === true){
+
                             row.remove();
+                            calculateTotalAndSetCounter();
+
                         } else if(success === true){
-                            
+
                             row.querySelector('div.js_price').textContent = new Intl.NumberFormat('de-AT', { style: 'currency', currency: 'EUR' }).format(response.price);
                             row.querySelector('div.js_price-quantity').textContent = new Intl.NumberFormat('de-AT', { style: 'currency', currency: 'EUR' }).format(response.price * response.quantity);
+                            calculateTotalAndSetCounter();
                         }
 
                     });
@@ -67,4 +126,36 @@ document.querySelectorAll("input.basket-change-quatity").forEach((element) => {
             });
 
     })
-})
+});
+
+/**
+ * Produkt aus dem Warekorb via button löschen
+*/
+document.querySelectorAll("button.js_delete-basket-item").forEach((element) => {
+    element.addEventListener("click", (e) => {
+        const url = e.currentTarget.dataset.href;
+            
+        fetch(url,{
+            method: 'POST'
+        })
+            .then((response) => {
+                if(response.status === 200){
+                    response.json().then(data => {
+                        console.log(data);
+                        
+                        let { success , errors, response } = data;
+                        const row = e.target.closest('div.row');
+                        
+                        if(success === true){
+
+                            row.remove();
+                            calculateTotalAndSetCounter();
+
+                        }
+
+                    });
+                }
+            });
+
+    })
+});

@@ -62,7 +62,7 @@ class Basket
      */
     public function addProduct(int $product_id, int $quantity): array
     {
-        $result = ['success' => false, 'errors' => null, 'response' => null];
+        $result = ['success' => false, 'errors' => [], 'response' => null];
         $product = Product::find($product_id);
         $current_basket_item = [];
 
@@ -163,7 +163,8 @@ class Basket
          */
         if( ($current_basket_item->quantity - $quantity) <= 0){
 
-            unset($this->items[$current_basket_item_idx])  ;
+            unset($this->items[$current_basket_item_idx]);
+            $this->items = array_values($this->items); #Das wird benötigt um den Array index zurücsetzen
             $this->save();
             $result['success'] = true;
 
@@ -223,6 +224,7 @@ class Basket
         if( $quantity <= 0){
 
             unset($this->items[$current_basket_item_idx]);
+            $this->items = array_values($this->items); #Das wird benötigt um den Array index zurücsetzen
             $this->save();
             $result['success'] = true;
 
@@ -251,5 +253,21 @@ class Basket
         }
 
         return $total;
+    }
+
+    /**
+     * Gibt wie viele Produkte samt der Menge im Warenkorb liegen
+     */
+    public static function count ():int 
+    {
+        $basket = self::get();
+        $count = 0;
+
+        foreach($basket->items as $basket_item)
+        {
+            $count = $count + $basket_item->quantity;
+        }
+
+        return $count;
     }
 }

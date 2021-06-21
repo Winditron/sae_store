@@ -17,7 +17,7 @@
             <div class="col">#<?php echo $basket_item->id; ?></div>
             <div class="col"><?php echo $basket_item->name; ?></div>
             <div class="col"><input type="number" class="basket-change-quatity" value="<?php echo $basket_item->quantity; ?>" data-href="<?php echo BASE_URL . '/api/basket/set/' . $basket_item->id; ?>/"></div>
-            <div class="col"><button class="danger delete" data-href="<?php echo BASE_URL . '/api/basket/set/' . $basket_item->id; ?>/0">Entfernen</button></div>
+            <div class="col"><button class="danger delete js_delete-basket-item" data-href="<?php echo BASE_URL . '/api/basket/set/' . $basket_item->id; ?>/0">Entfernen</button></div>
             <div class="col js_price"><?php echo Core\Helpers\Formatter::formatPrice($basket_item->price); ?></div>
             <div class="col js_price-quantity"><?php echo Core\Helpers\Formatter::formatPrice($basket_item->price * $basket_item->quantity); ?></div>
         </div>
@@ -25,7 +25,7 @@
 
     <div class="row total">
         <div class="col-2">TOTAL:</div>
-        <div class="col"><?php echo Core\Helpers\Formatter::formatPrice($basket->total()); ?></div>
+        <div class="col js_total"><?php echo Core\Helpers\Formatter::formatPrice($basket->total()); ?></div>
     </div>
 </div>
 

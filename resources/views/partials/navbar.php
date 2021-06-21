@@ -1,11 +1,13 @@
 <nav class="navbar">
     <div class="navbar row">
         <div class=" col">
-            <div class="brand"><?php echo Core\Config::get('app.appname'); ?></div>
+            <div class="brand"><?php
+
+echo Core\Config::get('app.appname'); ?></div>
             <a href="<?php echo BASE_URL . "/Shop"; ?>" class="navlink">Shop</a>
         </div>
     <div class="col">
-    <a class="navlink basket" href="<?php echo BASE_URL . "/basket"; ?>"><i class="ri-shopping-cart-fill"></i><div class="basket-count"></div></a>
+    <a class="navlink basket" href="<?php echo BASE_URL . "/basket"; ?>"><i class="ri-shopping-cart-fill"></i><div class="basket-count js_basket-count"><?php echo App\Models\Basket::count(); ?></div></a>
 <?php
 /**
  * Überprüfung ob user eigelogt ist
