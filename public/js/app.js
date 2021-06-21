@@ -1,7 +1,10 @@
+
+/**
+ * Löschen des DOM PICTURE element, falls die Verbindung zuwischen eines Bildes und eines Produktes gelöscht wurde
+ */
 document.querySelectorAll(".edit-gallery .actions button.delete").forEach((element) => {
     element.addEventListener("click", (e) => {
         const url = e.currentTarget.dataset.href;
-        const target = e.target;
 
         fetch(url,{
             method: 'POST'
@@ -11,6 +14,20 @@ document.querySelectorAll(".edit-gallery .actions button.delete").forEach((eleme
                     e.target.closest("div.picture").remove();
                 }
             });
+
+    })
+})
+
+/**
+    Produkt in den Warenkorblegen
+ */
+document.querySelectorAll("button.add-to-basket").forEach((element) => {
+    element.addEventListener("click", (e) => {
+        const url = e.currentTarget.dataset.href;
+
+        fetch(url,{
+            method: 'POST'
+        });
 
     })
 })

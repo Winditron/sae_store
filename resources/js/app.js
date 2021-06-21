@@ -17,3 +17,17 @@ document.querySelectorAll(".edit-gallery .actions button.delete").forEach((eleme
 
     })
 })
+
+/**
+    Produkt in den Warenkorblegen
+ */
+document.querySelectorAll("button.add-to-basket").forEach((element) => {
+    element.addEventListener("click", (e) => {
+        const url = e.currentTarget.dataset.href;
+
+        fetch(url,{
+            method: 'POST'
+        });
+
+    })
+})

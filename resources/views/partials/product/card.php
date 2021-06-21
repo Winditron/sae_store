@@ -18,6 +18,6 @@
     </div>
 
     <div class="product-actions">
-    <button class="add-to-basket" data-href="<?php echo BASE_URL . '/api/basket/add/' . $product->id; ?>">In den Warenkorb <i class="ri-shopping-cart-fill"></i></button>
+    <button class="add-to-basket" data-href="<?php echo BASE_URL . '/api/basket/add/' . $product->id; ?>/1">In den Warenkorb <i class="ri-shopping-cart-fill"></i></button>
     </div>
 </div>

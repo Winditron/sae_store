@@ -1,12 +1,15 @@
 <?php
 
 use App\Controllers\Api\Admin\ApiProductController;
+use App\Controllers\Api\BasketController;
 
 return [
     /**
      * Basket routen
      */
-    #'/basket/add/{id}' => [],
+    '/basket' => [BasketController::class, 'get'],
+    '/basket/add/{id}/{quantity}' => [BasketController::class, 'add'],
+    '/basket/remove/{id}/{quantity}' => [BasketController::class, 'remove'],
 
     /**
      * Admin Picture routen
