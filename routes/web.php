@@ -5,6 +5,7 @@ use App\Controllers\Admin\ProductController as AdminProductController;
 use App\Controllers\Admin\UserController as AdminUserController;
 use App\Controllers\AuthController;
 use App\Controllers\BasketController;
+use App\Controllers\CheckoutController;
 use App\Controllers\ProductController;
 use App\Controllers\ProfileController;
 
@@ -19,7 +20,17 @@ return [
     /**
      * Warenkorb (Basket) routen
      */
-    '/basket' => [BasketController::class, 'index'], #Produktübersicht
+    '/basket' => [BasketController::class, 'index'], #Warenkorbübersicht
+
+    /**
+     * Checkout routen
+     */
+    '/checkout/1' => [CheckoutController::class, 'loginOrGuest'], #Step 1 Anmelden oder als Gast
+    '/checkout/1/login' => [CheckoutController::class, 'loginUser'], #Step 1.1 User anmelden
+    '/checkout/2' => [CheckoutController::class, 'checkoutForm'], #step 2 benötigte Lieferdaten
+    '/checkout/2/check' => [CheckoutController::class, 'validateForm'], #step 2.1 validiere Lieferdaten
+    '/checkout/3' => [CheckoutController::class, 'summery'], #step 3 Bestellübersicht
+    '/checkout/finish' => [CheckoutController::class, 'finsih'], #step 3 save
 
     /**
      * login & signup routen

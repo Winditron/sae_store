@@ -12,7 +12,7 @@ Plantbase.at
   + secondname VARCHAR(255) NULL
   + phone VARCHAR(255) NULL
   + address  VARCHAR(255) NULL
-  + country VARCHAR(255) NULL
+  + city VARCHAR(255) NULL
   + zip VARCHAR(255) NULL
   + is_admin BOOL NULL default:0
   + crdate* (Creation Date) TIMESTAMP
@@ -65,10 +65,10 @@ Plantbase.at
   + email* VARCHAR(255)
   + phone* VARCHAR(255)
   + address*  VARCHAR(255)
-  + country* VARCHAR(255)
+  + city* VARCHAR(255)
   + zip* VARCHAR(255)
   + alt_address  VARCHAR(255)
-  + alt_country VARCHAR(255)
+  + alt_city VARCHAR(255)
   + alt_zip VARCHAR(255)
   + products* (JSON mit allen bestellten Produkten) TEXT
   + status ENUM('offen','bezahlt','in Bearbeitung','versandbereit','abgeschlossen','storniert') NULL

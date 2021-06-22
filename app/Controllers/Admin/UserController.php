@@ -59,7 +59,7 @@ class UserController
             $user->setPassword($_POST['password']);
             $user->phone = trim($_POST['phone']);
             $user->address = trim($_POST['address']);
-            $user->country = trim($_POST['country']);
+            $user->city = trim($_POST['city']);
             $user->zip = trim($_POST['zip']);
             $user->zip = trim($_POST['zip']);
 

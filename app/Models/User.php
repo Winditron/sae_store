@@ -19,7 +19,7 @@ public string $email;
 public string $password;
 public string $phone;
 public string $address;
-public string $country;
+public string $city;
 public string $zip;
 public bool $is_admin = false;
 public string $crdate;
@@ -35,7 +35,7 @@ public mixed $deleted_at;
         $this->password = $data['password'];
         $this->phone = $data['phone'];
         $this->address = $data['address'];
-        $this->country = $data['country'];
+        $this->city = $data['city'];
         $this->zip = $data['zip'];
         $this->is_admin = (bool)$data['is_admin'];
         $this->crdate = $data['crdate'];
@@ -51,27 +51,27 @@ public mixed $deleted_at;
 
         if(empty($this->id)){
 
-            $result = $database->query("INSERT INTO $tablename SET firstname = ?, secondname = ?, email = ?, password = ?, phone = ?, address = ?, country = ?, zip = ?, is_admin = ?",[
+            $result = $database->query("INSERT INTO $tablename SET firstname = ?, secondname = ?, email = ?, password = ?, phone = ?, address = ?, city = ?, zip = ?, is_admin = ?",[
                 's:firstname' => $this->firstname,
                 's:secondname' => $this->secondname,
                 's:email' => $this->email,
                 's:password' => $this->password,
                 's:phone' => $this->phone,
                 's:address' => $this->address,
-                's:country' => $this->country,
+                's:city' => $this->city,
                 's:zip' => $this->zip,
                 'i:is_admin' => $this->is_admin
             ]);
 
         }else {
-            return $database->query("UPDATE  $tablename SET firstname = ?, secondname = ?, email = ?, password = ?, phone = ?, address = ?, country = ?, zip = ?, is_admin = ? WHERE id = ? ",[
+            return $database->query("UPDATE  $tablename SET firstname = ?, secondname = ?, email = ?, password = ?, phone = ?, address = ?, city = ?, zip = ?, is_admin = ? WHERE id = ? ",[
                 's:firstname' => $this->firstname,
                 's:secondname' => $this->secondname,
                 's:email' => $this->email,
                 's:password' => $this->password,
                 's:phone' => $this->phone,
                 's:address' => $this->address,
-                's:country' => $this->country,
+                's:city' => $this->city,
                 's:zip' => $this->zip,
                 'i:is_admin' => $this->is_admin,
                 'i:id' => $this->id
@@ -130,7 +130,7 @@ public mixed $deleted_at;
         $validator->letters($_POST['secondname'], 'Nachname', false);
         $validator->tel($_POST['phone'], 'Phone', false);
         $validator->textnum($_POST['address'], 'Adresse', false);
-        $validator->letters($_POST['country'], 'Ort', false);
+        $validator->letters($_POST['city'], 'Ort', false);
         $validator->int((int) $_POST['zip'], 'PLZ', false);
         
         

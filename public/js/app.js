@@ -159,3 +159,22 @@ document.querySelectorAll("button.js_delete-basket-item").forEach((element) => {
 
     })
 });
+
+/**
+ * sichtbarkeit von alt_delivery
+*/
+document.querySelector("input.js_alt_delivery").addEventListener("click", (e) => {
+        
+    const alt_delivery = document.querySelector('div.js_alt_delivery');
+    const headline = document.querySelector('h3.js_checkout-headline');
+
+        if (e.target.checked){
+            alt_delivery.style.display = 'block';
+            headline.textContent = 'Rechnungsadresse';
+            
+        } else {
+            alt_delivery.style.display = 'none';
+            headline.textContent = 'Rechnungs- und Lieferadresse';
+        }
+        
+    });

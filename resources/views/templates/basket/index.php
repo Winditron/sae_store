@@ -24,8 +24,12 @@
     <?php endforeach;?>
 
     <div class="row total">
-        <div class="col-2">TOTAL:</div>
+        <div class="col-5">TOTAL:</div>
         <div class="col js_total"><?php echo Core\Helpers\Formatter::formatPrice($basket->total()); ?></div>
+    </div>
+    <div class="row total">
+        <div class="col-5"></div>
+        <div class="col js_total"><a class="btn checkout" href="<?php echo BASE_URL . '/checkout/1'; ?>">checkout</a></div>
     </div>
 </div>
 

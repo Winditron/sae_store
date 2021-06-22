@@ -43,8 +43,8 @@
 
         <div class="row" >
             <div class="form-group col">
-                <label for="country">ORT:</label>
-                <input type="text" id="country" name="country">
+                <label for="city">ORT:</label>
+                <input type="text" id="city" name="city">
             </div>
 
             <div class="form-group col">
