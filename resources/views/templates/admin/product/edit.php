@@ -30,8 +30,8 @@
             </div>
 
             <div class="form-group ">
-                <label for="price">Preis:</label>
-                <input type="text" id="price" name="price" value="<?php echo Core\Helpers\Formatter::formatPrice($product->price); ?>">
+                <label for="price">Preis: €</label>
+                <input type="text" id="price" name="price" value="<?php echo $product->price; ?>">
             </div>
 
             <div class="form-group ">

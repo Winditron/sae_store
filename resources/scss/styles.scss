@@ -22,10 +22,13 @@ div.row {
 
     div.col {
         flex:1;
-
-        &-5{
-            flex:5;
+        
+        @for $i from 1 through 10 {
+            &-#{$i}{
+                flex:$i;
+            }
         }
+        
     }
 }
 

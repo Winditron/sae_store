@@ -1,84 +1,137 @@
-<div class="product-form">
-    <form action="<?php echo BASE_URL; ?>/admin/product/<?php echo $product->id; ?>/edit/update" method="post">
-        <h2 class="signup form-title">Bearbeitung des Produkts #<?php echo $product->id ?></h2>
+<div class="order">
 
-            <div class="form-group ">
-                <label for="name">Produktname:</label>
-                <input type="text" id="name" name="name" value="<?php echo $product->name; ?>">
+<h2>Bearbeitung der Bestellung #<?php echo $order->id; ?></h2>
+<form action="<?php echo BASE_URL . "/admin/order/{$order->id}/edit/update"; ?>" method="post">
+
+    <div class="form-group">
+        <label for="status">Status:</label>
+        <select name="status" id="status">
+                    <option hidden>Bitte auswählen!</option>
+                    <?php foreach ($order->statusValues() as $value): ?>
+                            <option value="<?php echo $value; ?>" <?php echo ($order->status === $value) ? 'selected' : ''; ?>><?php echo $value; ?></option>
+                    <?php endforeach;?>
+                </select>
+    </div>
+
+    <div class="billing-address">
+        <div class="row">
+            <div class="col">
+                <h3 class="js_checkout-headline"><?php echo (empty($order->alt_firstname)) ? 'Rechnungs- und Lieferadresse' : 'Rechnungsadresse' ?></h3>
+                <div class="row">
+                    <div class="form-group col">
+                        <label for="firstname">Vorname:</label>
+                        <input type="text" id="firstname" name="firstname"  value="<?php echo $order->firstname; ?>">
+                    </div>
+
+                    <div class="form-group col">
+                        <label for="secondname">Nachname:</label>
+                        <input type="text" id="secondname" name="secondname" value="<?php echo $order->secondname; ?>">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email-Adresse:</label>
+                    <input type="email" id="email" name="email" value="<?php echo $order->email; ?>">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Telefonnummer:</label>
+                    <input type="text" id="phone" name="phone" value="<?php echo $order->phone; ?>">
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Adresse:</label>
+                    <input type="text" id="address" name="address" value="<?php echo $order->address; ?>">
+                </div>
+
+                <div class="row" >
+                    <div class="form-group col">
+                        <label for="city">ORT:</label>
+                        <input type="text" id="city" name="city" value="<?php echo $order->city; ?>">
+                    </div>
+
+                    <div class="form-group col">
+                        <label for="zip">PLZ:</label>
+                        <input type="text" id="zip" name="zip" value="<?php echo $order->zip; ?>">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="alt_delivery">Lieferadresse weicht von der Rechnungsadresse ab: </label>
+                    <input type="checkbox" class="js_alt_delivery" id="alt_delivery" name="alt_delivery" <?php echo (!empty($order->alt_firstname)) ? 'checked' : ''; ?>>
+                </div>
             </div>
+            <div class="col">
+                <div class="alt_delivery js_alt_delivery" <?php echo (!empty($order->alt_firstname)) ? 'style="display:block;"' : ''; ?>>
+                        <h3>Lieferadresse</h3>
 
+                        <div class="row">
+                            <div class="form-group col">
+                                <label for="alt_firstname">Vorname:</label>
+                                <input type="text" id="alt_firstname" name="alt_firstname" value="<?php echo (!empty($order->alt_firstname)) ? $order->alt_firstname : ''; ?>">
+                            </div>
 
-            <div class="edit-gallery">
-                <?php foreach ($product->pictures() as $picture): ?>
-                    <div class="picture">
-                        <figure>
-                            <?php echo $picture->getImgTag(); ?>
-                        </figure>
-                        <div class="actions">
-                            <!-- TODO umbauen über formular -->
-                            <input type="checkbox" name="delete-imgs[<?php echo $picture->id; ?>]" id="delete-img">
-                            <input type="radio" name="highlight-img" id="highlight-img" value="<?php echo $picture->id; ?>" <?php echo ($picture->id === $product->highlight_picture) ? 'checked' : ''; ?>>
+                            <div class="form-group col">
+                                <label for="alt_secondname">Nachname:</label>
+                                <input type="text" id="alt_secondname" name="alt_secondname" value="<?php echo (!empty($order->alt_secondname)) ? $order->alt_secondname : ''; ?>">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="alt_address">Adresse:</label>
+                            <input type="text" id="alt_address" name="alt_address" value="<?php echo (!empty($order->alt_address)) ? $order->alt_address : ''; ?>">
+                        </div>
+
+                        <div class="row" >
+                            <div class="form-group col">
+                                <label for="alt_city">ORT:</label>
+                                <input type="text" id="alt_city" name="alt_city" value="<?php echo (!empty($order->alt_city)) ? $order->alt_city : ''; ?>">
+                            </div>
+
+                            <div class="form-group col">
+                                <label for="alt_zip">PLZ:</label>
+                                <input type="text" id="alt_zip" name="alt_zip" value="<?php echo (!empty($order->alt_zip)) ? $order->alt_zip : ''; ?>">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="alt_phone">Telefonnummer:</label>
+                            <input type="text" id="alt_phone" name="alt_phone" value="<?php echo (!empty($order->alt_phone)) ? $order->alt_phone : ''; ?>">
                         </div>
                     </div>
-                <?php endforeach;?>
-                    <div class="add"><a href="<?php echo BASE_URL . "/admin/product/{$product->id}/pictures/selection" ?>" class="btn">&plus;</a></div>
             </div>
+        </div>
+    </div>
 
-            <div class="form-group ">
-                <label for="slug">Slug:</label>
-                <input type="text" id="slug" name="slug" value="<?php echo $product->slug; ?>">
+    <div class="basket-product-list table">
+        <div class="row table-headline">
+            <div class="col">Artikelnummer:</div>
+            <div class="col">Artikel:</div>
+            <div class="col">Menge:</div>
+            <div class="col">Preis/Stück:</div>
+            <div class="col">Preis:</div>
+        </div>
+
+
+
+        <?php foreach ($order_items as $order_item): ?>
+            <div class="row">
+                <div class="col">#<?php echo $order_item->id; ?></div>
+                <div class="col"><?php echo $order_item->name; ?></div>
+                <div class="col"><?php echo $order_item->quantity; ?></div>
+                <div class="col js_price"><?php echo Core\Helpers\Formatter::formatPrice($order_item->price); ?></div>
+                <div class="col js_price-quantity"><?php echo Core\Helpers\Formatter::formatPrice($order_item->price * $order_item->quantity); ?></div>
             </div>
+        <?php endforeach;?>
 
-            <div class="form-group ">
-                <label for="price">Preis:</label>
-                <input type="text" id="price" name="price" value="<?php echo Core\Helpers\Formatter::formatPrice($product->price); ?>">
-            </div>
-
-            <div class="form-group ">
-                <label for="category">Kategorie:</label>
-                <select name="category" id="category">
-                    <option hidden>Bitte auswählen!</option>
-                    <?php foreach ($categories as $category): ?>
-                            <option value="<?php echo $category->id; ?>" <?php echo ($product->category === $category->id) ? 'selected' : ''; ?>><?php echo $category->title; ?></option>
-                    <?php endforeach;?>
-                </select>
-            </div>
-
-            <div class="form-group cl">
-                <label for="watering">Wasserbedarf:</label>
-                <select name="watering" id="watering">
-                    <option hidden>Bitte auswählen!</option>
-                    <?php foreach ($product->wateringValues() as $value): ?>
-                            <option value="<?php echo $value; ?>" <?php echo ($product->watering === $value) ? 'selected' : ''; ?>><?php echo $value; ?></option>
-                    <?php endforeach;?>
-                </select>
-            </div>
-
-            <div class="form-group ">
-                <label for="sun_location">Standort:</label>
-                <select name="sun_location" id="sun_location">
-                    <option hidden>Bitte auswählen!</option>
-                    <?php foreach ($product->sunlocationValues() as $value): ?>
-                            <option value="<?php echo $value; ?>" <?php echo ($product->sun_location === $value) ? 'selected' : ''; ?>><?php echo $value; ?></option>
-                    <?php endforeach;?>
-                </select>
-            </div>
-
-            <div class="form-group ">
-                <label for="size">max. Größe: (cm)</label>
-                <input type="text" id="size" name="size" value="<?php echo $product->size; ?>">
-            </div>
-
-            <div class="form-group ">
-                <label for="stock">Lagerbestand:</label>
-                <input type="text" id="stock" name="stock" value="<?php echo $product->stock; ?>">
-            </div>
-
-            <div class="form-group ">
-                <label for="description">Beschreibung:</label>
-                <textarea id="description" name="description"><?php echo $product->description; ?></textarea>
-            </div>
-
-        <button type="submit">Speichern</button>
-    </form>
+        <div class="row total">
+            <div class="col-4">TOTAL:</div>
+            <div class="col js_total"><?php echo Core\Helpers\Formatter::formatPrice($total); ?></div>
+        </div>
+        <div class="row total">
+            <div class="col-4"></div>
+            <div class="col js_total"><button type="submit">Speichern</button></div>
+        </div>
+    </div>
+</form>
 </div>

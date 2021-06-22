@@ -1,12 +1,14 @@
 <div class="row">
     <div class="col">
-        <div class="gallery">
+        <div class="js_photo-gallary">
             <figure>
                 <?php echo (!empty($product->pictures())) ? $product->pictures()[0]?->getImgTag() : ''; ?>
             </figure>
-            <div class="gallery-menue">
+            <div class="js_photo-gallary-menu">
                 <?php foreach ($product->pictures() as $picture) {
-                    echo $picture->getImgTag();
+                    if($product->pictures()[0]->id !== $picture->id){
+                        echo $picture->getImgTag();
+                    }
                 }?>
             </div>
         </div>

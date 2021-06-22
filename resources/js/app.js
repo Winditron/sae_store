@@ -163,18 +163,38 @@ document.querySelectorAll("button.js_delete-basket-item").forEach((element) => {
 /**
  * sichtbarkeit von alt_delivery
 */
-document.querySelector("input.js_alt_delivery").addEventListener("click", (e) => {
-        
-    const alt_delivery = document.querySelector('div.js_alt_delivery');
-    const headline = document.querySelector('h3.js_checkout-headline');
-
-        if (e.target.checked){
-            alt_delivery.style.display = 'block';
-            headline.textContent = 'Rechnungsadresse';
+if(document.querySelector("input.js_alt_delivery")){
+    document.querySelector("input.js_alt_delivery").addEventListener("click", (e) => {
             
-        } else {
-            alt_delivery.style.display = 'none';
-            headline.textContent = 'Rechnungs- und Lieferadresse';
+        const alt_delivery = document.querySelector('div.js_alt_delivery');
+        const headline = document.querySelector('h3.js_checkout-headline');
+    
+            if (e.target.checked){
+                alt_delivery.style.display = 'block';
+                headline.textContent = 'Rechnungsadresse';
+                
+            } else {
+                alt_delivery.style.display = 'none';
+                headline.textContent = 'Rechnungs- und Lieferadresse';
+            }
         }
-        
+    );
+}
+
+/**
+ * Photo Gallary
+*/
+console.log(document.querySelectorAll("div.js_photo-gallary div.js_photo-gallary-menu > img"))
+document.querySelectorAll("div.js_photo-gallary div.js_photo-gallary-menu > img").forEach((element) => {
+
+    element.addEventListener("click", (e) => {
+        const main_image = e.target.closest("div.js_photo-gallary").querySelector("figure img");
+        const main_image_src= main_image.src;
+        const targrt_source = e.target.src;
+
+        main_image.src = targrt_source;
+        e.target.src = main_image_src;
+
     });
+
+});

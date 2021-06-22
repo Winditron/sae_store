@@ -7,6 +7,7 @@ use App\Controllers\Admin\UserController as AdminUserController;
 use App\Controllers\AuthController;
 use App\Controllers\BasketController;
 use App\Controllers\CheckoutController;
+use App\Controllers\OrderController;
 use App\Controllers\ProductController;
 use App\Controllers\ProfileController;
 
@@ -42,12 +43,21 @@ return [
     '/sign-up/finish' => [AuthController::class, 'signup'], # signup prozess
 
     /**
-     * User Profil
+     * Profil routen
      */
     '/profile/dashboard' => [ProfileController::class, 'dashboard'], # startroute eines eingeloggten USers
+    /**
+     * User Profil
+     */
     '/profile/edit' => [ProfileController::class, 'edit'], # Bearbeitungsformular für ein Profil
     '/profile/edit/update' => [ProfileController::class, 'update'], # Neue Einträge speichern
     '/profile/orders' => [ProfileController::class, 'orders'], # Auflistung aller Bestellungen
+    /**
+     * Order Bestellungen routen
+     */
+    '/profile/orders' => [OrderController::class, 'index'], #  Auflistung aller Bestellungen
+    '/profile/order/{id}/show' => [OrderController::class, 'show'], # Bearbeitungsformular für eine Bestellung
+    '/profile/order/{id}/storno' => [OrderController::class, 'update'], # Bearbeitungsformular für eine Bestellung
 
     /**
      * Admin routen
@@ -71,7 +81,6 @@ return [
     '/admin/user/{id}/delete' => [AdminUserController::class, 'delete'], #  Löschen eines Users (Soft delete)
     '/admin/user/{id}/edit' => [AdminUserController::class, 'edit'], # Bearbeitungsformular für ein UserKonto
     '/admin/user/{id}/edit/update' => [AdminUserController::class, 'update'], # Neue Einträge speichern
-
     /**
      * Admin Order Bestellungen routen
      */

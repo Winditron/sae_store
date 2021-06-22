@@ -77,8 +77,8 @@ class Order extends AbstractModel
                     's:address' => $this->address,
                     's:city' => $this->city,
                     's:zip' => $this->zip,
-                    's:alt_secondname' => $this->alt_secondname,
                     's:alt_firstname' => $this->alt_firstname,
+                    's:alt_secondname' => $this->alt_secondname,
                     's:alt_phone' => $this->alt_phone,
                     's:alt_address' => $this->alt_address,
                     's:alt_city' => $this->alt_city,
@@ -88,8 +88,9 @@ class Order extends AbstractModel
             ]);
 
         } else {
+
             return $database->query("   UPDATE  $tablename 
-                                        SET `user_id` = ?, `firstname` = ?, `secondname` = ?, `email` = ?, `phone` = ?, `address` = ?, `city` = ?, `zip` = ?, `alt_firstname` = ?, `alt_secondname` = ?, `alt_phone` = ?, `alt_address` = ?, `alt_city` = ?, `alt_zip` = ?, `products` = ?, `status` = ? 
+                                        SET `user_id` = ?, `firstname` = ?, `secondname` = ?, `email` = ?, `phone` = ?, `address` = ?, `city` = ?, `zip` = ?, `alt_firstname` = ?, `alt_secondname` = ?, `alt_phone` = ?, `alt_address` = ?, `alt_city` = ?, `alt_zip` = ?, `products` = ?, `status` = ?
                                         WHERE id = ?",[
 
                     'i:user_id' => $this->user_id,
@@ -100,8 +101,8 @@ class Order extends AbstractModel
                     's:address' => $this->address,
                     's:city' => $this->city,
                     's:zip' => $this->zip,
-                    's:alt_secondname' => $this->alt_secondname,
                     's:alt_firstname' => $this->alt_firstname,
+                    's:alt_secondname' => $this->alt_secondname,
                     's:alt_phone' => $this->alt_phone,
                     's:alt_address' => $this->alt_address,
                     's:alt_city' => $this->alt_city,
@@ -111,6 +112,7 @@ class Order extends AbstractModel
                     'i:id' => $this->id
 
             ]);
+            
         }
 
         $this->handleInsertResult($database);
@@ -141,10 +143,86 @@ class Order extends AbstractModel
             $validator->int((int) $_POST['alt_zip'], 'Lieferadresse PLZ', true);
         }
 
+        if(isset($_POST['status']) && !empty($_POST['status'])){
+            
+        /**
+         * Hier wird jeder mögliche Status wert durchgegangen und nachgeschaut, ob dieser mit dem übergebenen Wert übereinstimmt
+         */
+        $validStatusValues = $this->statusValues();
+        
+        $valid = false;
+
+        foreach($validStatusValues as $validValues){
+            if($validValues === $_POST['status']){
+                $valid = true;
+                break;
+            }
+        }
+
+        if (!$valid){
+            $errors[] = "Der Status ist kein gültiger Wert.";
+        }        
+
+        }
+
         $errors = $validator->getErrors();
 
         return $errors;
     }
     
+    public function statusValues():array
+    {
+        return $this->getEnumValues('status');
+    }
+
+    public static function findByUser(int $user_id, mixed $order_id = null)
+    {
+        if(empty($order_id)){
+            return self::findWhere("user_id", $user_id);
+        }
+
+        $database = new Database;
+        $tablename = self::getTablenameFromClassname();
+
+        $result = $database->query("  SELECT $tablename.*
+                            FROM $tablename
+                            WHERE user_id = ? AND id = ?", [
+                                'i:user_id' => $user_id,
+                                'i:id' => $order_id
+                            ]);
+
+        $result = self::handleUniqueResult($result);
+
+        return $result;
+
+    }
+
+    public function total()
+    {
+        $total = 0;
+
+        /**
+         * Berechnung von total
+         */
+        foreach (json_decode($this->products) as $item) {
+            $total = $total + $item->price * $item->quantity;
+        }
+
+        return $total;
+    }
+
+    public function amountOfProducts()
+    {
+        $count = 0;
+
+        /**
+         * Berechnung der Anzahl
+         */
+        foreach (json_decode($this->products) as $item) {
+            $count = $count +  $item->quantity;
+        }
+
+        return $count;
+    }
 }
 

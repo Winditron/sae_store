@@ -2,8 +2,7 @@
 
 namespace App\Controllers\Admin;
 
-use App\Models\Category;
-use App\Models\Product;
+use App\Models\Order;
 use Core\Helpers\Redirector;
 use Core\Middlewares\AuthMiddleware;
 use Core\Session;
@@ -22,21 +21,30 @@ class OrderController
 
     public function index()
     {
-        $products = Product::all();
+        $orders = Order::all();
 
-        View::render('admin/product/index', [
-            'products' => $products,
+        View::render('admin/order/index', [
+            'orders' => $orders,
         ]);
     }
 
     public function edit(int $id)
     {
-        $product = Product::find($id);
-        $categories = Category::all();
+        $order = Order::find($id);
+        $order_items = json_decode($order->products);
+        $total = 0;
 
-        View::render('admin/product/edit', [
-            'product' => $product,
-            'categories' => $categories,
+        /**
+         * Berechnung von total
+         */
+        foreach ($order_items as $item) {
+            $total = $total + $item->price * $item->quantity;
+        }
+
+        View::render('admin/order/edit', [
+            'order' => $order,
+            'order_items' => $order_items,
+            'total' => $total,
         ]);
     }
 
@@ -45,53 +53,62 @@ class OrderController
 
         $errors = [];
 
-        $product = Product::find($id);
+        $order = Order::find($id);
 
-        if (empty($product)) {
-            $errors[] = "Produkt konnte nicht gefunden werden.";
+        if (empty($order)) {
+            $errors[] = "Bestellung konnte nicht gefunden werden.";
             Session::set('errors', $errors);
-            Redirector::redirect(BASE_URL . "/admin/product/{$product->id}/edit");
+            Redirector::redirect(BASE_URL . "/admin/order/{$order->id}/edit");
         }
 
         /**
          * Daten werden valiediert
          */
-        $errors = $product->validateFormData();
+        $errors = $order->validateFormData();
 
         if (!empty($errors)) {
             Session::set('errors', $errors);
         } else {
 
-            /**
-             * Einträge speichern
-             */
-            $product->name = trim($_POST['name']);
-            $product->slug = trim($_POST['slug']);
-            $product->highlight_picture = trim((int) $_POST['highlight-img']);
-            $product->price = trim((float) $_POST['price']);
-            $product->category = trim((int) $_POST['category']);
-            $product->size = trim((int) $_POST['size']);
-            $product->stock = trim((int) $_POST['stock']);
-            $product->description = trim($_POST['description']);
-            $product->watering = trim($_POST['watering']);
-            $product->sun_location = trim($_POST['sun_location']);
+            $order->email = $_POST['email'];
+            $order->firstname = $_POST['firstname'];
+            $order->secondname = $_POST['secondname'];
+            $order->phone = $_POST['phone'];
+            $order->address = $_POST['address'];
+            $order->city = $_POST['city'];
+            $order->zip = (int) $_POST['zip'];
+            $order->status = $_POST['status'];
 
-            $product->save();
+            if (isset($_POST['alt_delivery']) && $_POST['alt_delivery'] === 'on') {
 
-            /**
-             * Verknüpfungen zu den Bilden löschen
-             */
-            $delete_pictures = [];
-            foreach ($_POST['delete-imgs'] as $picture_id => $on) {
-                $delete_pictures[] = $picture_id;
+                $order->alt_firstname = $_POST['alt_firstname'];
+                $order->alt_secondname = $_POST['alt_secondname'];
+                $order->alt_phone = $_POST['alt_phone'];
+                $order->alt_address = $_POST['alt_address'];
+                $order->alt_city = $_POST['alt_city'];
+                $order->alt_zip = (int) $_POST['alt_zip'];
+
+            } else {
+
+                $order->alt_firstname = null;
+                $order->alt_secondname = null;
+                $order->alt_phone = null;
+                $order->alt_address = null;
+                $order->alt_city = null;
+                $order->alt_zip = null;
+
             }
 
-            $product->unbindPictures($delete_pictures);
+            if (!$order->save()) {
+                Session::set('errors', ['Konnt nicht gespeichert werden.']);
+                Redirector::redirect(BASE_URL . "/admin/order/{$order->id}/edit");
+            }
 
             Session::set('success', ['Erfolgreich gespeichert.']);
+
         }
 
-        Redirector::redirect(BASE_URL . "/admin/product/{$product->id}/edit");
+        Redirector::redirect(BASE_URL . "/admin/order/{$order->id}/edit");
 
     }
 

@@ -22,8 +22,35 @@ div.row {
 div.row div.col {
   flex: 1;
 }
+div.row div.col-1 {
+  flex: 1;
+}
+div.row div.col-2 {
+  flex: 2;
+}
+div.row div.col-3 {
+  flex: 3;
+}
+div.row div.col-4 {
+  flex: 4;
+}
 div.row div.col-5 {
   flex: 5;
+}
+div.row div.col-6 {
+  flex: 6;
+}
+div.row div.col-7 {
+  flex: 7;
+}
+div.row div.col-8 {
+  flex: 8;
+}
+div.row div.col-9 {
+  flex: 9;
+}
+div.row div.col-10 {
+  flex: 10;
 }
 
 div.alt_delivery {

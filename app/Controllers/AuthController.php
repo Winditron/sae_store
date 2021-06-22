@@ -74,7 +74,6 @@ class AuthController
 
         if (!empty($errors)) {
             Session::set('errors', $errors);
-            exit;
             Redirector::redirect(BASE_URL . '/sign-up');
         }
 

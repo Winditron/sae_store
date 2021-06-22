@@ -22,12 +22,10 @@ class ApiProductController
 
         if (empty($product)) {
             ApiResponse::json("could not find Product", 400);
-            exit;
         }
 
         if (!$product->unbindPicture($pictureid)) {
             ApiResponse::json("could not unbind Picture", 400);
-            exit;
         }
     }
 }
