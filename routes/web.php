@@ -1,6 +1,7 @@
 <?php
 
 use App\Controllers\Admin\AdminController;
+use App\Controllers\Admin\OrderController as AdminOrderController;
 use App\Controllers\Admin\ProductController as AdminProductController;
 use App\Controllers\Admin\UserController as AdminUserController;
 use App\Controllers\AuthController;
@@ -28,9 +29,8 @@ return [
     '/checkout/1' => [CheckoutController::class, 'loginOrGuest'], #Step 1 Anmelden oder als Gast
     '/checkout/1/login' => [CheckoutController::class, 'loginUser'], #Step 1.1 User anmelden
     '/checkout/2' => [CheckoutController::class, 'checkoutForm'], #step 2 benötigte Lieferdaten
-    '/checkout/2/check' => [CheckoutController::class, 'validateForm'], #step 2.1 validiere Lieferdaten
-    '/checkout/3' => [CheckoutController::class, 'summery'], #step 3 Bestellübersicht
-    '/checkout/finish' => [CheckoutController::class, 'finsih'], #step 3 save
+    '/checkout/3' => [CheckoutController::class, 'finish'], #step validate and save
+    '/checkout/summery' => [CheckoutController::class, 'summery'], #step 3 Bestellübersicht
 
     /**
      * login & signup routen
@@ -71,5 +71,12 @@ return [
     '/admin/user/{id}/delete' => [AdminUserController::class, 'delete'], #  Löschen eines Users (Soft delete)
     '/admin/user/{id}/edit' => [AdminUserController::class, 'edit'], # Bearbeitungsformular für ein UserKonto
     '/admin/user/{id}/edit/update' => [AdminUserController::class, 'update'], # Neue Einträge speichern
+
+    /**
+     * Admin Order Bestellungen routen
+     */
+    '/admin/orders' => [AdminOrderController::class, 'index'], #  Auflistung aller Bestellungen
+    '/admin/order/{id}/edit' => [AdminOrderController::class, 'edit'], # Bearbeitungsformular für eine Bestellung
+    '/admin/order/{id}/edit/update' => [AdminOrderController::class, 'update'], # Neue Einträge speichern
 
 ];

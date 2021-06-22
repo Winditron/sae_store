@@ -126,6 +126,8 @@ public mixed $deleted_at;
             
         }
         
+        $validator->email($_POST['email'], 'Email-Adresse', true);
+        $validator->password($_POST['password'], 'Passwort', true);
         $validator->letters($_POST['firstname'], 'Vorname', false);
         $validator->letters($_POST['secondname'], 'Nachname', false);
         $validator->tel($_POST['phone'], 'Phone', false);

@@ -1,5 +1,5 @@
 <div class="checkout">
-    <form action="<?php echo BASE_URL; ?>/checkout/check" method="post">
+    <form action="<?php echo BASE_URL; ?>/checkout/3" method="post">
         <h2 class="signup form-title"><i class="ri-user-fill"></i>Lieferdaten</h2>
 
         <div class="row">
