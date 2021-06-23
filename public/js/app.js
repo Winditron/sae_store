@@ -21,7 +21,7 @@ document.querySelectorAll(".edit-gallery .actions button.delete").forEach((eleme
 /**
     Produkt in den Warenkorblegen
  */
-document.querySelectorAll("button.add-to-basket").forEach((element) => {
+document.querySelectorAll("button.js_add-to-basket").forEach((element) => {
     element.addEventListener("click", (e) => {
         const url = e.currentTarget.dataset.href;
 
@@ -191,8 +191,6 @@ document.querySelectorAll("div.js_photo-gallary div.js_photo-gallary-menu > img"
         const main_image = e.target.closest("div.js_photo-gallary").querySelector("figure img");
         const main_image_src= main_image.src;
         const targrt_source = e.target.src;
-
-        console.log([main_image, main_image_src, targrt_source]);
 
         main_image.src = targrt_source;
         e.target.src = main_image_src;

@@ -1,0 +1,35 @@
+div.summery-list {
+    padding: 25px;
+
+    div.summery-product-list{
+        margin: 15vh 5vw 0 ;
+    }
+
+    div.summery-billing-address {
+        margin: 25px 5vw;
+        max-width: 750px;
+        border-bottom: solid 2px $base-color-2;
+        padding-bottom: 10px;
+    }
+
+    div.summery-status {
+        margin: 25px 5vw;
+        max-width: 320px;
+
+        form {
+            display: inline;
+        }
+    }
+
+    div.summery-form-billing-address {
+            > div {
+            padding: 20px;
+    
+            h3 {
+                margin-bottom: 10px;
+            }
+        }
+    }
+
+}
+

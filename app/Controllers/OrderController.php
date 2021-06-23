@@ -30,8 +30,6 @@ class OrderController
         $order = Order::findByUser($user->id, $id);
         $order_items = json_decode($order->products);
 
-        var_dump($order->status);
-
         View::render('profile/order/show', [
             'order' => $order,
             'order_items' => $order_items,

@@ -1,21 +1,27 @@
-<div class="order">
+<div class="summery-list">
 
-<h2>Bearbeitung der Bestellung #<?php echo $order->id; ?></h2>
-<div class="row">
-    <div class="col">Status:</div>
-    <div class="col">
-        <strong><?php echo $order->status; ?></strong>
-        <?php if ($order->status != 'Storno beantragt' && $order->status != "storniert"): ?>
+<h2>Bestellung #<?php echo $order->id; ?></h2>
+<div class="summery-status center">
+    <div class="row">
+        <div class="col"><strong>Status:</strong></div>
+        <div class="col"><?php echo $order->status; ?></div>
+    </div>
+
+    <?php if ($order->status != 'Storno beantragt' && $order->status != "storniert"): ?>
+    <div class="row">
+        <div class="col-2 fill">
             <form action="<?php echo BASE_URL . "/profile/order/{$order->id}/storno"; ?>" method="post">
                     <input type="hidden" name="status" value="Storno beantragt">
-                    <Button type="submit">Stornierung beantragen</Button>
+                    <Button type="submit" class="danger fill">Stornierung beantragen</Button>
             </form>
-        <?php endif;?>
+        </div>
     </div>
+    <?php endif;?>
 
 </div>
 
-<div class="billing-address">
+
+<div class="summery-billing-address">
     <div class="row">
         <div class="col">
             <h3><?php echo (empty($order->alt_firstname)) ? 'Rechnungs- und Lieferadresse' : 'Rechnungsadresse' ?></h3>
@@ -37,7 +43,7 @@
 </div>
 
 
-    <div class="basket-product-list table">
+    <div class="summery-product-list table">
         <div class="row table-headline">
             <div class="col">Artikelnummer:</div>
             <div class="col">Artikel:</div>
@@ -49,18 +55,19 @@
 
 
         <?php foreach ($order_items as $order_item): ?>
-            <div class="row">
+            <div class="row colored">
                 <div class="col">#<?php echo $order_item->id; ?></div>
                 <div class="col"><?php echo $order_item->name; ?></div>
                 <div class="col"><?php echo $order_item->quantity; ?></div>
-                <div class="col js_price"><?php echo Core\Helpers\Formatter::formatPrice($order_item->price); ?></div>
-                <div class="col js_price-quantity"><?php echo Core\Helpers\Formatter::formatPrice($order_item->price * $order_item->quantity); ?></div>
+                <div class="col"><?php echo Core\Helpers\Formatter::formatPrice($order_item->price); ?></div>
+                <div class="col"><?php echo Core\Helpers\Formatter::formatPrice($order_item->price * $order_item->quantity); ?></div>
             </div>
         <?php endforeach;?>
 
         <div class="row total">
-            <div class="col-4">TOTAL:</div>
-            <div class="col js_total"><?php echo Core\Helpers\Formatter::formatPrice($order->total()); ?></div>
+            <div class="col-3"></div>
+            <div class="col right">TOTAL:</div>
+            <div class="col"><?php echo Core\Helpers\Formatter::formatPrice($order->total()); ?></div>
         </div>
     </div>
 

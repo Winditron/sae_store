@@ -1,14 +1,14 @@
-<div class="product-form">
-    <form action="<?php echo BASE_URL; ?>/profile/edit/update" method="post">
-        <h2 class="signup form-title">Kontoeinstellungen</h2>
+<div class="form-list">
+    <h2 class="form-title">Kontoeinstellungen</h2>
+    <form action="<?php echo BASE_URL; ?>/profile/edit/update" method="post" class="form-list-formular">
 
-            <div class="row">
-            <div class="form-group col">
+        <div class="form-row">
+            <div class="form-group wrap">
                 <label for="firstname">Vorname:</label>
                 <input type="text" id="firstname" name="firstname" value="<?php echo $user->firstname; ?>">
             </div>
 
-            <div class="form-group col">
+            <div class="form-group wrap">
                 <label for="secondname">Nachname:</label>
                 <input type="text" id="secondname" name="secondname" value="<?php echo $user->secondname; ?>">
             </div>
@@ -39,18 +39,24 @@
             <input type="text" id="address" name="address" value="<?php echo $user->address; ?>">
         </div>
 
-        <div class="row" >
-            <div class="form-group col">
+        <div class="form-row" >
+            <div class="form-group wrap">
                 <label for="city">ORT:</label>
                 <input type="text" id="city" name="city" value="<?php echo $user->city; ?>">
             </div>
 
-            <div class="form-group col">
+            <div class="form-group wrap">
                 <label for="zip">PLZ:</label>
                 <input type="text" id="zip" name="zip" value="<?php echo $user->zip; ?>">
             </div>
         </div>
 
-        <button type="submit">Speichern</button>
+
+        <div class="row">
+            <div class="col"></div>
+            <div class="col">
+                <button type="submit" class="fill">Speichern</button>
+            </div>
+        </div>
     </form>
 </div>

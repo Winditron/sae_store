@@ -1,0 +1,51 @@
+div.dashboard {
+    padding: 25px;
+}
+
+div.tile-display {
+
+    display: flex;
+    justify-content:center;
+    align-content: center;
+    align-items: center;
+    min-height: 80vh;
+
+    div.tile-list {
+        max-width: 750px;
+        display: flex;
+        justify-content:space-between;
+        flex-wrap: wrap;
+    }
+
+
+    div.tile {
+        box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.3);
+        width: 200px;
+        height: 200px;
+        margin: 10px;
+
+        &:nth-child(even){
+            background:$base-color-2;
+        }
+
+        &:nth-child(odd){
+            background:$base-color-3;
+        }
+
+        a {
+            color: $base_color-6;
+            font-weight: bold;
+            font-size: 20px;
+            display: block;
+            line-height: 200px;
+            text-align: center;
+
+            &:hover {
+                background: $complementary;
+                color: #fff;
+            }
+        }
+
+    }
+
+}

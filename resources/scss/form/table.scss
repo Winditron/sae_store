@@ -1,0 +1,68 @@
+$max-col: 10;
+
+
+div.table {
+
+    div.table-headline {
+        border-bottom: 2px solid $base-color-2;
+
+        div.col {
+            font-weight: bold;
+        }
+    }
+
+    
+    div.row {
+        
+        &.colored{
+            
+            &:nth-child(odd) { 
+                
+                background-color: $base-color-1;
+            }
+        }
+
+        @for $i from 1 through $max-col {
+            div.col, div.col-#{$i}  { 
+                line-height: 50px;
+                text-align: center;
+                
+            }
+
+        }
+    }
+}
+
+.row {
+    display: flex;
+    
+    &.center {
+        align-items: center;
+        text-align: center;
+    }
+
+    .col {
+
+        height: 100%;
+        flex:1;
+        
+
+
+        @for $i from 1 through $max-col {
+            &-#{$i}{
+                flex:$i;
+                
+            }            
+        }
+        
+        &.right {
+            text-align: right;
+        }
+
+        &.center {
+            text-align: center;
+        }
+    
+        
+    }
+}

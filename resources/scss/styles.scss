@@ -8,30 +8,61 @@
 }
 
 main {
-    width: 1440px;
+    max-width: 1440px;
     margin: 0 auto;
-}
 
-img {
-    height: 100px;
-    width: auto;
 }
+/**
+ * Base colors
+ */
+@import 'colors.scss';
 
-div.row {
-    display: flex;
+/**
+ * headlins h1 h2 .....
+ */
+@import 'headlines.scss';
 
-    div.col {
-        flex:1;
-        
-        @for $i from 1 through 10 {
-            &-#{$i}{
-                flex:$i;
-            }
-        }
-        
-    }
-}
+/**
+ * Partials
+ */
+@import 'partials/partials.scss';
+
+/**
+ * product
+ */
+@import 'product/product.scss';
+
+/**
+ * picture
+ */
+@import 'picture/picture.scss';
+
+/**
+ * Form elements
+ */
+@import 'form/form.scss';
+
+/**
+ * summery
+ */
+@import 'summery/summery.scss';
+
+/**
+ * tileDisplay
+ */
+@import 'tile/tiledisplay.scss';
+
+/**
+ * list
+ */
+@import 'list/list.scss';
+
+/**
+ * login
+ */
+@import 'login/login.scss';
 
 div.alt_delivery {
     display: none;
 }
+

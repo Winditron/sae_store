@@ -1,0 +1,43 @@
+div.product-card {
+
+    box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.3);
+    overflow: hidden;
+    width:200px;
+    margin: 10px;
+    
+    div {
+
+        &.product-title {
+            a {
+                display: block;
+                text-align: center;
+                color:$base-color-6;
+                line-height: 30px;
+                font-weight: bold;
+                font-size: 20px;
+                
+            }
+        }
+
+        &.product-picture {
+            a {
+                display: block;
+
+                img {
+                    max-width: 100%;
+                    max-height: 100%;
+                    width: auto;
+                    object-fit: cover;
+                    z-index: -1;
+                }
+
+            }
+        }
+
+        &.price {
+            padding: 7px 0;
+            text-align: center;
+        }
+    }
+
+}

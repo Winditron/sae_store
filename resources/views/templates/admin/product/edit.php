@@ -1,6 +1,6 @@
-<div class="product-form">
-    <form action="<?php echo BASE_URL; ?>/admin/product/<?php echo $product->id; ?>/edit/update" method="post">
-        <h2 class="signup form-title">Bearbeitung des Produkts #<?php echo $product->id ?></h2>
+<div class="form-list">
+    <h2 class="signup form-title">Bearbeitung des Produkts #<?php echo $product->id ?></h2>
+    <form action="<?php echo BASE_URL; ?>/admin/product/<?php echo $product->id; ?>/edit/update" method="post" class="form-list-formular">
 
             <div class="form-group ">
                 <label for="name">Produktname:</label>
@@ -15,9 +15,15 @@
                             <?php echo $picture->getImgTag(); ?>
                         </figure>
                         <div class="actions">
-                            <!-- TODO umbauen über formular -->
-                            <input type="checkbox" name="delete-imgs[<?php echo $picture->id; ?>]" id="delete-img">
-                            <input type="radio" name="highlight-img" id="highlight-img" value="<?php echo $picture->id; ?>" <?php echo ($picture->id === $product->highlight_picture) ? 'checked' : ''; ?>>
+                            <label class="mark-picture" for="marked-pictures[<?php echo $picture->id; ?>]">
+                                <input type="checkbox" name="marked-pictures[<?php echo $picture->id; ?>]" id="marked-pictures[<?php echo $picture->id; ?>]">
+                                <div class="marker delete"></div>
+                            </label>
+
+                            <label for="highlight-<?php echo $picture->id; ?>" class="highlight-img">
+                                <input type="radio" name="highlight-img" id="highlight-<?php echo $picture->id; ?>" value="<?php echo $picture->id; ?>" <?php echo ($picture->id === $product->highlight_picture) ? 'checked' : ''; ?>>
+                                <div class="highlight-button"></div>
+                            </label>
                         </div>
                     </div>
                 <?php endforeach;?>

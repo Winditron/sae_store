@@ -1,0 +1,25 @@
+div.picture-gallery {
+    
+    figure.gallery-image {
+        img {
+            height:320px;
+            width: 320px;
+            object-fit: contain;
+        }
+    }
+
+    div.gallery-menu {
+
+        display: flex;
+        flex-wrap: wrap;
+        padding: 2px;
+
+        > img {
+            height:50px;
+            width: 50px;
+            object-fit: cover;
+            margin:2px;
+
+        }
+    }
+}

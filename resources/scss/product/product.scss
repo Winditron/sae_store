@@ -1,0 +1,13 @@
+@import 'card.scss';
+@import 'showcase.scss';
+
+div.product-list {
+    display: flex;
+    flex-wrap: wrap;
+    padding:10px  
+}
+
+div.product-showcase {
+    padding: 20px;
+}
+

@@ -1,0 +1,71 @@
+div.form-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.3);
+
+    &:focus {
+        outline: auto;
+    }
+    
+    > label {
+        flex: 2;
+        line-height: 30px;
+        color: $base_color-4;
+        border-bottom: solid 2px $base_color-4;
+        background: $base_color-1;
+        text-align: center;
+    }
+    
+    > input, > button, > select {
+        flex:3;
+        border-bottom: solid 2px $base_color-4;
+    }
+    
+    &.wrap {
+        display: block;
+
+        > label {
+            display: block;
+            line-height: 30px;
+            border: none;
+    
+        }
+    
+        > input, > button, > select {
+            display: block;
+            text-align: center;
+        }
+
+    }
+
+    &.checkbox {
+        box-shadow: none;
+        border: none;
+        > label {
+            flex: 4;
+            border: none;
+            background: none;
+            text-align: left;
+        }
+        
+        > input[type="checkbox"] {
+            flex:1;
+            border: none;
+            margin:auto;
+            display: block;
+
+        }
+    }
+
+}
+
+div.form-row {
+    display: flex;
+    
+    > div.form-group {
+
+            margin-right: 15px;
+        
+    }
+}

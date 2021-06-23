@@ -9,7 +9,7 @@ trait Formatter
      */
     public static function formatPrice(int $price): string
     {
-        return "&euro;" . number_format($price, 2, ",", ".");
+        return "&euro; " . number_format($price, 2, ",", ".");
     }
 
 }

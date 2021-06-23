@@ -232,7 +232,7 @@ class Product extends AbstractModel
         /**
          * Hier wird die SQL-Abfrage zusammen gesetzt
          */
-        $sql = "DELETE FROM `products_pictures_map` WHERE `product_id` = ? AND `picture_id` IN ";
+        $sql = "DELETE FROM $tablename WHERE `product_id` = ? AND `picture_id` IN ";
         $sql_values = [];#zb (?,?,?) sind die Platzhlalter um später smt die Werte zu binden
         $values = [];# sind die Werte im Array, die die Query benötigt
 
