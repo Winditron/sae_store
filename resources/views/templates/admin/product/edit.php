@@ -15,8 +15,8 @@
                             <?php echo $picture->getImgTag(); ?>
                         </figure>
                         <div class="actions">
-                            <label class="mark-picture" for="marked-pictures[<?php echo $picture->id; ?>]">
-                                <input type="checkbox" name="marked-pictures[<?php echo $picture->id; ?>]" id="marked-pictures[<?php echo $picture->id; ?>]">
+                            <label class="delete-img" for="delete-imgs[<?php echo $picture->id; ?>]">
+                                <input type="checkbox" name="delete-imgs[<?php echo $picture->id; ?>]" id="delete-imgs[<?php echo $picture->id; ?>]">
                                 <div class="marker delete"></div>
                             </label>
 

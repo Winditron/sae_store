@@ -194,17 +194,17 @@ div.edit-gallery > div.picture > figure > img {
   width: 100%;
   object-fit: contain;
 }
-div.edit-gallery > div.picture label.mark-picture {
+div.edit-gallery > div.picture label.delete-img {
   position: absolute;
   height: 100%;
   width: 100%;
   top: 0;
   curser: pointer;
 }
-div.edit-gallery > div.picture label.mark-picture > input[type=checkbox] {
+div.edit-gallery > div.picture label.delete-img > input[type=checkbox] {
   opacity: 0;
 }
-div.edit-gallery > div.picture label.mark-picture > input[type=checkbox]:checked + div.marker:after {
+div.edit-gallery > div.picture label.delete-img > input[type=checkbox]:checked + div.marker:after {
   content: " ";
   display: block;
   position: absolute;
@@ -215,7 +215,7 @@ div.edit-gallery > div.picture label.mark-picture > input[type=checkbox]:checked
   z-index: -1;
   opacity: 1;
 }
-div.edit-gallery > div.picture label.mark-picture > input[type=checkbox]:checked + div.marker.delete:after {
+div.edit-gallery > div.picture label.delete-img > input[type=checkbox]:checked + div.marker.delete:after {
   content: " ";
   display: block;
   position: absolute;
@@ -233,6 +233,7 @@ div.edit-gallery > div.picture label.highlight-img {
   width: 100%;
   bottom: 0;
   left: 0;
+  cursor: pointer;
 }
 div.edit-gallery > div.picture label.highlight-img > input[type=radio] {
   opacity: 0;

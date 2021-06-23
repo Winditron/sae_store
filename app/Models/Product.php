@@ -139,7 +139,8 @@ class Product extends AbstractModel
          * deleted imges array validieren
          * es dürfen nur zahlen sein
          */
-        if (is_array($_POST['delete-imgs']) && !empty($_POST['delete-imgs'])){
+        var_dump($_POST);
+        if (isset($_POST['delete-imgs']) && is_array($_POST['delete-imgs']) && !empty($_POST['delete-imgs'])){
 
             $valid = true;
             

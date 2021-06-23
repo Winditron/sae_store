@@ -92,7 +92,7 @@ class ProductController
             Session::set('success', ['Erfolgreich gespeichert.']);
         }
 
-        Redirector::redirect(BASE_URL . "/admin/product/{$product->id}/edit");
+        #Redirector::redirect(BASE_URL . "/admin/product/{$product->id}/edit");
 
     }
 
