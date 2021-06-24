@@ -54,7 +54,7 @@
                 <label for="watering">Wasserbedarf:</label>
                 <select name="watering" id="watering">
                     <option hidden>Bitte auswählen!</option>
-                    <?php foreach ($product->wateringValues() as $value): ?>
+                    <?php foreach (App\Models\Product::wateringValues() as $value): ?>
                             <option value="<?php echo $value; ?>" <?php echo ($product->watering === $value) ? 'selected' : ''; ?>><?php echo $value; ?></option>
                     <?php endforeach;?>
                 </select>
@@ -64,7 +64,7 @@
                 <label for="sun_location">Standort:</label>
                 <select name="sun_location" id="sun_location">
                     <option hidden>Bitte auswählen!</option>
-                    <?php foreach ($product->sunlocationValues() as $value): ?>
+                    <?php foreach (App\Models\Product::sunlocationValues() as $value): ?>
                             <option value="<?php echo $value; ?>" <?php echo ($product->sun_location === $value) ? 'selected' : ''; ?>><?php echo $value; ?></option>
                     <?php endforeach;?>
                 </select>

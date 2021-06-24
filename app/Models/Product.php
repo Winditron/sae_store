@@ -56,6 +56,8 @@ class Product extends AbstractModel
         $tablename = self::getTablenameFromClassname();
 
         if(empty($this->id)){
+            
+            #var_dump("INSERT INTO $tablename SET name = $this->name, slug = $this->slug, highlight_picture = $this->highlight_picture, description = $this->description, price = $this->price, category = $this->category, watering = $this->watering, sun_location = $this->sun_location, size = $this->size, stock = $this->stock");
 
             $result = $database->query("INSERT INTO $tablename SET name = ?, slug = ?, highlight_picture = ?, description = ?, price = ?, category = ?, watering = ?, sun_location = ?, size = ?, stock = ?",[
                 's:name' => $this->name,
@@ -101,12 +103,12 @@ class Product extends AbstractModel
         return Picture::findByProduct($this->id, $picture_id);
     }
 
-    public function wateringValues():array
+    public static function wateringValues():array
     {
         return self::getEnumValues('watering');
     }
 
-    public function sunlocationValues():array
+    public static function sunlocationValues():array
     {
         return self::getEnumValues('sun_location');
     }
@@ -139,7 +141,6 @@ class Product extends AbstractModel
          * deleted imges array validieren
          * es dürfen nur zahlen sein
          */
-        var_dump($_POST);
         if (isset($_POST['delete-imgs']) && is_array($_POST['delete-imgs']) && !empty($_POST['delete-imgs'])){
 
             $valid = true;
@@ -162,7 +163,7 @@ class Product extends AbstractModel
          * Higlight bild validieren
          */
 
-        if(is_int($_POST['highlight-img'])){ 
+        if(isset($_POST['highlight-img']) && is_int($_POST['highlight-img'])){ 
 
             if(!array_search( (int)$_POST['highlight-img'],  $_POST['delete-imgs'], true)){
 
@@ -183,7 +184,7 @@ class Product extends AbstractModel
         /**
          * Hier wird jeder mögliche Watering wert durchgegangen und nachgeschaut, ob dieser mit dem übergebenen Wert übereinstimmt
          */
-        $validWateringValues = $this->wateringValues();
+        $validWateringValues = self::wateringValues();
         
         $valid = false;
 

@@ -1,5 +1,6 @@
 <div class="list">
     <h2>Alle Produkte</h2>
+    <a href="<?php echo BASE_URL; ?>/admin/product/new" class="btn">anlegen</a>
     <div class="list-table table center">
         <div class="row table-headline">
             <div class="col">Produktnummer:</div>

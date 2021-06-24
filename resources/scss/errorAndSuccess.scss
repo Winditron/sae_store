@@ -1,0 +1,26 @@
+div.form-massages {
+
+    > div {
+        padding: 10px;
+        margin: 10px 0;
+    }
+   
+    .form-success {
+        border-radius: 5px;
+        border: 2px solid $base_color-5;
+        background: $base_color-3;
+        display: block;
+        
+    }
+    
+    .form-error {
+    
+            border-radius: 5px;
+            border: 2px solid red;
+            background: lightcoral;
+            display: block;
+    
+        
+    }
+    
+}

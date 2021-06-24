@@ -5,6 +5,7 @@ namespace App\Controllers\Admin;
 use App\Models\Category;
 use App\Models\Picture;
 use App\Models\Product;
+use App\Models\User;
 use Core\Helpers\Redirector;
 use Core\Middlewares\AuthMiddleware;
 use Core\Session;
@@ -28,6 +29,53 @@ class ProductController
         View::render('admin/product/index', [
             'products' => $products,
         ]);
+    }
+
+    public function createForm()
+    {
+
+        $categories = Category::all();
+
+        View::render('admin/product/create', [
+
+            'categories' => $categories,
+        ]);
+    }
+
+    public function create()
+    {
+        $errors = [];
+
+        $product = new Product();
+
+        /**
+         * Daten werden valiediert
+         */
+        $errors = $product->validateFormData();
+
+        if (!empty($errors)) {
+            Session::set('errors', $errors);
+        } else {
+
+            /**
+             * Einträge speichern
+             */
+            $product->name = trim($_POST['name']);
+            $product->slug = trim($_POST['slug']);
+            $product->price = trim((float) $_POST['price']);
+            $product->category = trim((int) $_POST['category']);
+            $product->size = trim((int) $_POST['size']);
+            $product->stock = trim((int) $_POST['stock']);
+            $product->description = trim($_POST['description']);
+            $product->watering = trim($_POST['watering']);
+            $product->sun_location = trim($_POST['sun_location']);
+
+            $product->save();
+
+            Session::set('success', ['Erfolgreich gespeichert.']);
+            Redirector::redirect(BASE_URL . "/admin/product/" . $product->id . "/edit");
+        }
+        Redirector::redirect(BASE_URL . "/admin/product/new");
     }
 
     public function edit(int $id)
@@ -92,7 +140,7 @@ class ProductController
             Session::set('success', ['Erfolgreich gespeichert.']);
         }
 
-        #Redirector::redirect(BASE_URL . "/admin/product/{$product->id}/edit");
+        Redirector::redirect(BASE_URL . "/admin/product/{$product->id}/edit");
 
     }
 

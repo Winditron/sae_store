@@ -15,6 +15,26 @@ main {
  * Base colors
  */
 /**
+ * Base colors
+ */
+div.form-massages > div {
+  padding: 10px;
+  margin: 10px 0;
+}
+div.form-massages .form-success {
+  border-radius: 5px;
+  border: 2px solid #33FF33;
+  background: #A9FCA9;
+  display: block;
+}
+div.form-massages .form-error {
+  border-radius: 5px;
+  border: 2px solid red;
+  background: lightcoral;
+  display: block;
+}
+
+/**
  * headlins h1 h2 .....
  */
 h2 {

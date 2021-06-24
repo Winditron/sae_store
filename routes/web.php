@@ -69,6 +69,8 @@ return [
     '/admin/products' => [AdminProductController::class, 'index'], #  Auflistung aller Produkte
     '/admin/product/{id}/delete/confirm' => [AdminProductController::class, 'confirmDelete'], #  Bestetigung des löschen eines Produkts
     '/admin/product/{id}/delete' => [AdminProductController::class, 'delete'], #  Löschen eines Produkts (Soft delete)
+    '/admin/product/new' => [AdminProductController::class, 'createForm'], # Bearbeitungsformular für Produkte
+    '/admin/product/create' => [AdminProductController::class, 'create'], # Bearbeitungsformular für Produkte
     '/admin/product/{id}/edit' => [AdminProductController::class, 'edit'], # Bearbeitungsformular für Produkte
     '/admin/product/{id}/edit/update' => [AdminProductController::class, 'update'], # Neue Einträge speichern
     '/admin/product/{id}/pictures/selection' => [AdminProductController::class, 'pictureSelection'], # Bilderauswahl

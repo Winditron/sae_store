@@ -93,13 +93,20 @@ class Picture extends AbstractFile
         $tablename_map = self::TABLENAME_PRODUCTS_MAP;
 
         $tablename = self::getTablenameFromClassname();
-        
-        $result = $database->query("
-            SELECT  `{$tablename}`.*
-            FROM    `{$tablename}`
-            LEFT JOIN    `{$tablename_map}` on `pictures`.`id` = `{$tablename_map}`.`picture_id`
-            WHERE   `{$tablename_map}`.`product_id` != {$product_id} OR `{$tablename_map}`.picture_id IS NULL
-        ");
+
+        /**
+         * ICh krige einfach die SQL abfrage nicht hin
+         */
+
+        $sql = "    SELECT  `{$tablename}`.*
+                    FROM    `{$tablename}`
+                    LEFT JOIN    `{$tablename_map}` on `pictures`.`id` = `{$tablename_map}`.`picture_id`
+                    GROUP BY `{$tablename_map}`.`product_id`
+                    HAVING  `{$tablename_map}`.`product_id` != {$product_id} OR `{$tablename_map}`.`product_id` IS NULL";
+
+                    #var_dump($sql);
+
+        $result = $database->query($sql);
 
         $result= self::handleResult($result);
 

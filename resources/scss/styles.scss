@@ -18,6 +18,11 @@ main {
 @import 'colors.scss';
 
 /**
+ * Base colors
+ */
+@import 'errorAndSuccess.scss';
+
+/**
  * headlins h1 h2 .....
  */
 @import 'headlines.scss';
