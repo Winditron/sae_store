@@ -14,6 +14,11 @@ use App\Controllers\ProfileController;
 return [
 
     /**
+     * home
+     */
+
+    '/' => [ProductController::class, 'index'], # Auflistung aller Produkte
+    /**
      * Shop/Product routen
      */
     '/Shop' => [ProductController::class, 'index'], # Auflistung aller Produkte

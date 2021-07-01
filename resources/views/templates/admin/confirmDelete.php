@@ -1,10 +1,9 @@
-<div class="card">
-    <div class="card-header">
-        <?php echo $type; ?> wirklich löschen?
-    </div>
-    <div class="card-body">
-        <h5 class="card-title">Wollen Sie dieses Element wirklich löschen?</h5>
-        <p class="card-text">
+<div class="confirm">
+        <h2><?php echo $type; ?> wirklich löschen?<h2></h2>
+
+    <div class="confirm-body">
+        <h5 class="confirm-title">Wollen Sie dieses Element wirklich löschen?</h5>
+        <p class="confirm-text">
             <?php echo "{$type}: {$title}"; ?>
         </p>
         <a href="<?php echo $confirmUrl; ?>" class="btn danger">Löschen!</a>

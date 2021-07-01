@@ -133,7 +133,7 @@ class CheckoutController
          * Den Warenkorb leeren, da die Bestellung durchgeführt wurde
          */
         $basket = Basket::get();
-        #$basket->delete();
+        $basket->delete();
         $order = Session::get('lastOrder');
         $order_items = json_decode($order->products);
         $total = 0;
